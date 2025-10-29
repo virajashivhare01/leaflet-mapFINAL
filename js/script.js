@@ -50,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!latitude || !longitude) return;
 
             const marker = L.marker([+latitude, +longitude], { icon: customIcon });
-            // Only show Chapter Leader for local markers
             marker.bindPopup(`
                 <b style="color:#0F1B79;">${row['ChapterName']}</b><br>
                 City: ${row['City']}<br>
@@ -82,8 +81,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     mouseout: e => geojsonLayer.resetStyle(e.target),
                     click: () => {
+                        // Remove previous selected state layer
                         if (selectedStateLayer) map.removeLayer(selectedStateLayer);
+                        if (markersLayer) map.removeLayer(markersLayer);
+                        if (markerClusterGroup) map.removeLayer(markerClusterGroup);
 
+                        // Highlight selected state
                         selectedStateLayer = L.geoJSON(feature, {
                             style: {
                                 fillColor: getColor(stateCounts[stateName] || 0),
@@ -93,17 +96,38 @@ document.addEventListener('DOMContentLoaded', () => {
                             }
                         }).addTo(map);
 
-                        // Only show state Chair + Regional Director here
+                        // Show state info
                         stateNameElement.textContent = stateName;
                         stateChairElement.innerHTML = `
                             Chair: ${chairData[stateName]?.Chair || 'N/A'}<br>
                             Regional Director: ${chairData[stateName]?.['Regional Director'] || 'N/A'}
                         `;
-
                         infoBox.classList.remove('hidden');
                         defaultMessage.classList.add('hidden');
 
+                        // Add only the markers for that state
+                        markersLayer = L.layerGroup();
+                        chaptersDataGlobal.forEach(row => {
+                            if (row['State'].trim() === stateName) {
+                                const lat = row['Latitude'];
+                                const lng = row['Longitude'];
+                                if (lat && lng) {
+                                    const marker = L.marker([+lat, +lng], { icon: customIcon });
+                                    marker.bindPopup(`
+                                        <b style="color:#0F1B79;">${row['ChapterName']}</b><br>
+                                        City: ${row['City']}<br>
+                                        Leader: ${row['ChapterLeaderName']}
+                                    `);
+                                    markersLayer.addLayer(marker);
+                                }
+                            }
+                        });
+                        map.addLayer(markersLayer);
+
+                        // Zoom to state
                         map.fitBounds(layer.getBounds());
+
+                        // Show exit button
                         exitButton.style.display = 'block';
                     }
                 });
@@ -111,11 +135,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }).addTo(map);
     }
 
+    // Exit button resets the map
     exitButton.addEventListener('click', () => {
         if (selectedStateLayer) map.removeLayer(selectedStateLayer);
+        if (markersLayer) map.removeLayer(markersLayer);
+        if (!map.hasLayer(markerClusterGroup)) map.addLayer(markerClusterGroup);
+
         infoBox.classList.add('hidden');
         defaultMessage.classList.remove('hidden');
         exitButton.style.display = 'none';
+
         map.setView([39.8283, -98.5795], 5);
     });
 
@@ -125,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const stateName = row['State'].trim();
             chairData[stateName] = {
                 Chair: row['Chair'].trim(),
-                'Regional Director': row['Regional Director'].trim()
+                'Regional Director': row['Regional Director']?.trim() || 'N/A'
             };
         });
 
