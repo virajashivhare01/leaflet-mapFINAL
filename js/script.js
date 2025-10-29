@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     mouseout: e => geojsonLayer.resetStyle(e.target),
                     click: () => {
-                        // Remove previous selected state layer
+                        // Remove previous layers
                         if (selectedStateLayer) map.removeLayer(selectedStateLayer);
                         if (markersLayer) map.removeLayer(markersLayer);
                         if (markerClusterGroup) map.removeLayer(markerClusterGroup);
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         infoBox.classList.remove('hidden');
                         defaultMessage.classList.add('hidden');
 
-                        // Add only the markers for that state
+                        // Add markers for this state only
                         markersLayer = L.layerGroup();
                         chaptersDataGlobal.forEach(row => {
                             if (row['State'].trim() === stateName) {
