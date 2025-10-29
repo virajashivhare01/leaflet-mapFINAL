@@ -86,15 +86,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const city = row['City'];
             const chapterName = row['ChapterName'];
             const chapterLeaderName = row['ChapterLeaderName'];
-            const determinedState = row['DeterminedState'];
 
             if (latitude && longitude && chapterName && city && chapterLeaderName) {
                 const marker = L.marker([+latitude, +longitude], { icon: customIcon });
                 marker.bindPopup(`
                     <b><span style="color: #0F1B79;">${chapterName}</span></b><br>
                     <i>${city}</i><br>
-                    Chapter Leader: ${chapterLeaderName}<br>
-                    Regional Director: ${chairData[determinedState]?.RegionalDirector || 'N/A'}
+                    Chapter Leader: ${chapterLeaderName}
                 `);
                 markerClusterGroup.addLayer(marker);
             }
@@ -141,11 +139,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         stateNameElement.textContent = stateName;
                         stateChairElement.innerHTML = `
-                            State Chair: ${chairInfo ? chairInfo.Chair : 'N/A'}<br>
-                            Regional Director: ${chairInfo ? chairInfo.RegionalDirector : 'N/A'}
+                            Chair: ${chairData[stateName]?.chair || 'N/A'}<br>
+                            Regional Director: ${chairData[stateName]?.regionalDirector || 'N/A'}
                         `;
                         infoBox.classList.remove('hidden');
                         defaultMessage.classList.add('hidden');
+
+                        map.fitBounds(layer.getBounds());
+                        showExitButton();
 
                         selectedStateLayer = L.geoJSON(feature, {
                             style: {
@@ -167,8 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 marker.bindPopup(`
                                     <b><span style="color: #0F1B79;">${row['ChapterName']}</span></b><br>
                                     <i>${row['City']}</i><br>
-                                    Chapter Leader: ${row['ChapterLeaderName']}<br>
-                                    Regional Director: ${chairData[chapterStateName]?.RegionalDirector || 'N/A'}
+                                    Chapter Leader: ${row['ChapterLeaderName']}
                                 `);
                                 markersLayer.addLayer(marker);
                             }
@@ -200,18 +200,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     exitButton.addEventListener('click', resetMap);
 
-    Promise.all([
-        d3.csv('chairs.csv'),
-        d3.csv('chapters.csv')
-    ]).then(([chairsData, chaptersData]) => {
-        chairsData.forEach(row => {
-            const stateName = row.State.trim();
-            if (stateName) {
-                chairData[stateName] = {
-                    Chair: row.Chair || 'N/A',
-                    RegionalDirector: row.RegionalDirector || 'N/A'
-                };
-            }
+    fetch('chairs.csv')
+        .then(response => response.text())
+        .then(csvText => {
+            const rows = csvText.trim().split('\n');
+            rows.forEach((row, index) => {
+                if (index === 0) return;
+                const [state, chair, regionalDirector] = row.split(',');
+                if (state && chair && regionalDirector) {
+                    const stateName = state.trim();
+                    chairData[stateName] = {
+                        chair: chair.trim(),
+                        regionalDirector: regionalDirector.trim()
+                    };
+                }
         });
 
         chaptersDataGlobal = chaptersData;
@@ -224,10 +226,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 chaptersDataGlobal.forEach(row => {
                     const latitude = row['Latitude'];
                     const longitude = row['Longitude'];
+                    const city = row['City'];
                     const chapterName = row['ChapterName'];
                     const chapterLeaderName = row['ChapterLeaderName'];
 
-                    if (latitude && longitude && chapterName && chapterLeaderName) {
+                    if (latitude && longitude && chapterName && city && chapterLeaderName) {
                         const point = turf.point([+longitude, +latitude]);
                         let chapterStateName = null;
 
