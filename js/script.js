@@ -41,13 +41,34 @@ document.addEventListener('DOMContentLoaded', () => {
         popupAnchor: [0, -30]
     });
 
-    function showExitButton() {
-        exitButton.style.display = 'block';
-    }
+    d3.csv('chairs.csv').then(chairsData => {
+        chairsData.forEach(row => {
+            const stateName = row['State'].trim();
+            chairData[stateName] = {
+                Chair: row['Chair'].trim(),
+                'Regional Director': row['Regional Director']?.trim() || 'N/A'
+            };
+        });
 
-    function hideExitButton() {
-        exitButton.style.display = 'none';
-    }
+        d3.csv('chapters.csv').then(chaptersData => {
+            chaptersDataGlobal = chaptersData;
+
+            chaptersDataGlobal.forEach(row => {
+                const stateName = row['State'].trim();
+                stateCounts[stateName] = (stateCounts[stateName] || 0) + 1;
+            });
+
+            fetch('https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json')
+                .then(res => res.json())
+                .then(geojsonData => {
+                    allStatesGeoJSON = geojsonData;
+
+                    initializeMap();
+                    addClusteredMarkers();
+                    addStatesToMap();
+                });
+        });
+    });
 
     function addClusteredMarkers() {
         markerClusterGroup = L.markerClusterGroup();
@@ -68,4 +89,81 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function addStatesToMap() {
-        geojsonLayer = L.geoJSON(allSt
+        geojsonLayer = L.geoJSON(allStatesGeoJSON, {
+            style: feature => {
+                const stateName = feature.properties.name.trim();
+                const count = stateCounts[stateName] || 0;
+                return {
+                    color: '#fff',
+                    weight: 1,
+                    fillColor: getColor(count),
+                    fillOpacity: count > 0 ? 0.7 : 0
+                };
+            },
+            onEachFeature: (feature, layer) => {
+                const stateName = feature.properties.name.trim();
+                layer.on({
+                    mouseover: e => e.target.setStyle({ weight: 4, color: '#0F1B79', fillOpacity: 0.8 }),
+                    mouseout: e => geojsonLayer.resetStyle(e.target),
+                    click: () => {
+                        // Remove previous layers
+                        if (selectedStateLayer) map.removeLayer(selectedStateLayer);
+                        if (markersLayer) map.removeLayer(markersLayer);
+
+                        // Highlight state
+                        selectedStateLayer = L.geoJSON(feature, {
+                            style: {
+                                fillColor: getColor(stateCounts[stateName] || 0),
+                                fillOpacity: 0.7,
+                                weight: 5,
+                                color: '#0F1B79'
+                            }
+                        }).addTo(map);
+
+                        // Show info
+                        stateNameElement.textContent = stateName;
+                        stateChairElement.innerHTML = `
+                            Chair: ${chairData[stateName]?.Chair || 'N/A'}<br>
+                            Regional Director: ${chairData[stateName]?.['Regional Director'] || 'N/A'}
+                        `;
+                        infoBox.classList.remove('hidden');
+                        defaultMessage.classList.add('hidden');
+
+                        // Add state markers
+                        markersLayer = L.layerGroup();
+                        chaptersDataGlobal.forEach(row => {
+                            if (row['State'].trim() === stateName) {
+                                const lat = row['Latitude'];
+                                const lng = row['Longitude'];
+                                if (lat && lng) {
+                                    const marker = L.marker([+lat, +lng], { icon: customIcon });
+                                    marker.bindPopup(`
+                                        <b style="color:#0F1B79;">${row['ChapterName']}</b><br>
+                                        City: ${row['City']}<br>
+                                        Leader: ${row['ChapterLeaderName']}
+                                    `);
+                                    markersLayer.addLayer(marker);
+                                }
+                            }
+                        });
+                        map.addLayer(markersLayer);
+
+                        map.fitBounds(layer.getBounds());
+                    }
+                });
+            }
+        }).addTo(map);
+    }
+
+    exitButton.addEventListener('click', () => {
+        if (selectedStateLayer) map.removeLayer(selectedStateLayer);
+        if (markersLayer) map.removeLayer(markersLayer);
+        if (geojsonLayer) map.removeLayer(geojsonLayer);
+
+        addStatesToMap();
+        infoBox.classList.add('hidden');
+        defaultMessage.classList.remove('hidden');
+
+        map.setView([39.8283, -98.5795], 5);
+    });
+});
