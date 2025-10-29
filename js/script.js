@@ -41,9 +41,16 @@ document.addEventListener('DOMContentLoaded', () => {
         popupAnchor: [0, -30]
     });
 
+    function showExitButton() {
+        exitButton.style.display = 'block';
+    }
+
+    function hideExitButton() {
+        exitButton.style.display = 'none';
+    }
+
     function addClusteredMarkers() {
         markerClusterGroup = L.markerClusterGroup();
-
         chaptersDataGlobal.forEach(row => {
             const latitude = row['Latitude'];
             const longitude = row['Longitude'];
@@ -57,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
             `);
             markerClusterGroup.addLayer(marker);
         });
-
         map.addLayer(markerClusterGroup);
     }
 
@@ -76,17 +82,16 @@ document.addEventListener('DOMContentLoaded', () => {
             onEachFeature: (feature, layer) => {
                 const stateName = feature.properties.name.trim();
                 layer.on({
-                    mouseover: e => {
-                        e.target.setStyle({ weight: 4, color: '#0F1B79', fillOpacity: 0.8 });
-                    },
+                    mouseover: e => e.target.setStyle({ weight: 4, color: '#0F1B79', fillOpacity: 0.8 }),
                     mouseout: e => geojsonLayer.resetStyle(e.target),
                     click: () => {
                         // Remove previous layers
                         if (selectedStateLayer) map.removeLayer(selectedStateLayer);
                         if (markersLayer) map.removeLayer(markersLayer);
+                        if (geojsonLayer) map.removeLayer(geojsonLayer);
                         if (markerClusterGroup) map.removeLayer(markerClusterGroup);
 
-                        // Highlight selected state
+                        // Highlight state
                         selectedStateLayer = L.geoJSON(feature, {
                             style: {
                                 fillColor: getColor(stateCounts[stateName] || 0),
@@ -96,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             }
                         }).addTo(map);
 
-                        // Show state info
+                        // Show info
                         stateNameElement.textContent = stateName;
                         stateChairElement.innerHTML = `
                             Chair: ${chairData[stateName]?.Chair || 'N/A'}<br>
@@ -105,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         infoBox.classList.remove('hidden');
                         defaultMessage.classList.add('hidden');
 
-                        // Add markers for this state only
+                        // Add state markers
                         markersLayer = L.layerGroup();
                         chaptersDataGlobal.forEach(row => {
                             if (row['State'].trim() === stateName) {
@@ -125,30 +130,33 @@ document.addEventListener('DOMContentLoaded', () => {
                         map.addLayer(markersLayer);
 
                         // Zoom to state
-                        map.fitBounds(layer.getBounds());
+                        if (layer.getBounds) map.fitBounds(layer.getBounds());
 
                         // Show exit button
-                        exitButton.style.display = 'block';
+                        showExitButton();
                     }
                 });
             }
         }).addTo(map);
     }
 
-    // Exit button resets the map
-    exitButton.addEventListener('click', () => {
+    function resetMap() {
         if (selectedStateLayer) map.removeLayer(selectedStateLayer);
         if (markersLayer) map.removeLayer(markersLayer);
+        if (geojsonLayer) map.removeLayer(geojsonLayer);
         if (!map.hasLayer(markerClusterGroup)) map.addLayer(markerClusterGroup);
+
+        addStatesToMap();
 
         infoBox.classList.add('hidden');
         defaultMessage.classList.remove('hidden');
-        exitButton.style.display = 'none';
+        hideExitButton();
 
         map.setView([39.8283, -98.5795], 5);
-    });
+    }
 
-    // Load chairs CSV
+    exitButton.addEventListener('click', resetMap);
+
     d3.csv('chairs.csv').then(chairsData => {
         chairsData.forEach(row => {
             const stateName = row['State'].trim();
@@ -158,19 +166,16 @@ document.addEventListener('DOMContentLoaded', () => {
             };
         });
 
-        // Load chapters CSV
         d3.csv('chapters.csv').then(chaptersData => {
             chaptersDataGlobal = chaptersData;
 
-            // Count chapters per state
             chaptersDataGlobal.forEach(row => {
                 const stateName = row['State'].trim();
                 stateCounts[stateName] = (stateCounts[stateName] || 0) + 1;
             });
 
-            // Load US states GeoJSON
             fetch('https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json')
-                .then(response => response.json())
+                .then(res => res.json())
                 .then(geojsonData => {
                     allStatesGeoJSON = geojsonData;
 
