@@ -86,13 +86,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const city = row['City'];
             const chapterName = row['ChapterName'];
             const chapterLeaderName = row['ChapterLeaderName'];
+            const determinedState = row['DeterminedState'];
 
             if (latitude && longitude && chapterName && city && chapterLeaderName) {
                 const marker = L.marker([+latitude, +longitude], { icon: customIcon });
                 marker.bindPopup(`
                     <b><span style="color: #0F1B79;">${chapterName}</span></b><br>
                     <i>${city}</i><br>
-                    Chapter Leader: ${chapterLeaderName}
+                    Chapter Leader: ${chapterLeaderName}<br>
+                    Regional Director: ${chairData[determinedState]?.RegionalDirector || 'N/A'}
                 `);
                 markerClusterGroup.addLayer(marker);
             }
@@ -138,7 +140,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (markersLayer) map.removeLayer(markersLayer);
 
                         stateNameElement.textContent = stateName;
-                        stateChairElement.textContent = chairInfo ? chairInfo.Chair : 'N/A';
+                        stateChairElement.innerHTML = `
+                            State Chair: ${chairInfo ? chairInfo.Chair : 'N/A'}<br>
+                            Regional Director: ${chairInfo ? chairInfo.RegionalDirector : 'N/A'}
+                        `;
                         infoBox.classList.remove('hidden');
                         defaultMessage.classList.add('hidden');
 
@@ -162,7 +167,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                 marker.bindPopup(`
                                     <b><span style="color: #0F1B79;">${row['ChapterName']}</span></b><br>
                                     <i>${row['City']}</i><br>
-                                    Chapter Leader: ${row['ChapterLeaderName']}
+                                    Chapter Leader: ${row['ChapterLeaderName']}<br>
+                                    Regional Director: ${chairData[chapterStateName]?.RegionalDirector || 'N/A'}
                                 `);
                                 markersLayer.addLayer(marker);
                             }
@@ -201,7 +207,10 @@ document.addEventListener('DOMContentLoaded', () => {
         chairsData.forEach(row => {
             const stateName = row.State.trim();
             if (stateName) {
-                chairData[stateName] = { Chair: row.Chair };
+                chairData[stateName] = {
+                    Chair: row.Chair || 'N/A',
+                    RegionalDirector: row.RegionalDirector || 'N/A'
+                };
             }
         });
 
@@ -215,11 +224,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 chaptersDataGlobal.forEach(row => {
                     const latitude = row['Latitude'];
                     const longitude = row['Longitude'];
-                    const city = row['City'];
                     const chapterName = row['ChapterName'];
                     const chapterLeaderName = row['ChapterLeaderName'];
 
-                    if (latitude && longitude && chapterName && city && chapterLeaderName) {
+                    if (latitude && longitude && chapterName && chapterLeaderName) {
                         const point = turf.point([+longitude, +latitude]);
                         let chapterStateName = null;
 
