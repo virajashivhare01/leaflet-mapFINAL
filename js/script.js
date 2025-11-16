@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         // Show state info
                         stateNameElement.textContent = stateName;
                         stateChairElement.innerHTML = `
-                            Chair: ${chairData[stateName]?.Chair || 'N/A'}<br>
+                            ${chairData[stateName]?.Chair || 'N/A'}<br>
                             Regional Director: ${chairData[stateName]?.['Regional Director'] || 'N/A'}
                         `;
                         infoBox.classList.remove('hidden');
