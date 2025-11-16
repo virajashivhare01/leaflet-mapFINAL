@@ -17,21 +17,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getColor(count) {
         return count > 10 ? '#08306b' :
-               count > 8 ? '#08519c' :
-               count > 6 ? '#2171b5' :
-               count > 4 ? '#4292c6' :
-               count > 2 ? '#6baed6' :
-               count > 1 ? '#9ecae1' : '#c6dbef';
+            count > 8 ? '#08519c' :
+                count > 6 ? '#2171b5' :
+                    count > 4 ? '#4292c6' :
+                        count > 2 ? '#6baed6' :
+                            count > 1 ? '#9ecae1' : '#c6dbef';
+    }
+
+    function applyFontToMap() {
+        const mapElements = document.querySelectorAll('.leaflet-container, .leaflet-popup-content, .marker-cluster div');
+        mapElements.forEach(el => {
+            el.style.fontFamily = "'Montserrat', sans-serif";
+        });
+    }
+
+    function showExitButton() {
+        exitButton.classList.add('visible');
+        exitButton.style.display = 'block';
+    }
+
+    function hideExitButton() {
+        exitButton.classList.remove('visible');
+        exitButton.style.display = 'none';
     }
 
     function initializeMap() {
-        map = L.map('map', { zoomControl: false }).setView([39.8283, -98.5795], 5);
+        map = L.map('map', { zoomControl: false }).setView([39.8283, -98.5795], 5); // Center on US
         L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
             attribution: 'Map data &copy; OpenStreetMap contributors',
             subdomains: 'abcd',
             maxZoom: 19
         }).addTo(map);
         L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+        applyFontToMap();
     }
 
     const customIcon = L.divIcon({
@@ -42,23 +61,45 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function addClusteredMarkers() {
-        markerClusterGroup = L.markerClusterGroup();
+        markerClusterGroup = L.markerClusterGroup({
+            iconCreateFunction: function (cluster) {
+                const childCount = cluster.getChildCount();
+                let clusterClass = 'marker-cluster-small';
+
+                if (childCount > 50) {
+                    clusterClass = 'marker-cluster-large';
+                } else if (childCount > 10) {
+                    clusterClass = 'marker-cluster-medium';
+                }
+
+                return new L.DivIcon({
+                    html: `<div><span>${childCount}</span></div>`,
+                    className: `marker-cluster ${clusterClass}`,
+                    iconSize: [40, 40]
+                });
+            }
+        });
 
         chaptersDataGlobal.forEach(row => {
             const latitude = row['Latitude'];
             const longitude = row['Longitude'];
-            if (!latitude || !longitude) return;
+            const city = row['City'];
+            const chapterName = row['ChapterName'];
+            const chapterLeaderName = row['ChapterLeaderName'];
 
-            const marker = L.marker([+latitude, +longitude], { icon: customIcon });
-            marker.bindPopup(`
-                <b style="color:#0F1B79;">${row['ChapterName']}</b><br>
-                City: ${row['City']}<br>
-                Leader: ${row['ChapterLeaderName']}
-            `);
-            markerClusterGroup.addLayer(marker);
+            if (latitude && longitude && chapterName && city && chapterLeaderName) {
+                const marker = L.marker([+latitude, +longitude], { icon: customIcon });
+                marker.bindPopup(`
+                    <b><span style="color: #0F1B79;">${chapterName}</span></b><br>
+                    <i>${city}</i><br>
+                    Chapter Leader: ${chapterLeaderName}
+                `);
+                markerClusterGroup.addLayer(marker);
+            }
         });
 
         map.addLayer(markerClusterGroup);
+        applyFontToMap();
     }
 
     function addStatesToMap() {
@@ -70,23 +111,37 @@ document.addEventListener('DOMContentLoaded', () => {
                     color: '#fff',
                     weight: 1,
                     fillColor: getColor(count),
-                    fillOpacity: count > 0 ? 0.7 : 0
+                    fillOpacity: 0.7
                 };
             },
             onEachFeature: (feature, layer) => {
                 const stateName = feature.properties.name.trim();
+                const chairInfo = chairData[stateName];
+
                 layer.on({
                     mouseover: e => {
-                        e.target.setStyle({ weight: 4, color: '#0F1B79', fillOpacity: 0.8 });
+                        const layer = e.target;
+                        layer.setStyle({
+                            weight: 5,
+                            color: '#0F1B79',
+                        });
+                        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                            layer.bringToFront();
+                        }
                     },
                     mouseout: e => geojsonLayer.resetStyle(e.target),
                     click: () => {
-                        // Remove previous layers
+                        map.removeLayer(markerClusterGroup);
+                        map.removeLayer(geojsonLayer);
+
                         if (selectedStateLayer) map.removeLayer(selectedStateLayer);
                         if (markersLayer) map.removeLayer(markersLayer);
-                        if (markerClusterGroup) map.removeLayer(markerClusterGroup);
 
-                        // Highlight selected state
+                        stateNameElement.textContent = stateName;
+                        stateChairElement.textContent = chairInfo ? chairInfo.Chair : 'N/A';
+                        infoBox.classList.remove('hidden');
+                        defaultMessage.classList.add('hidden');
+
                         selectedStateLayer = L.geoJSON(feature, {
                             style: {
                                 fillColor: getColor(stateCounts[stateName] || 0),
@@ -96,88 +151,104 @@ document.addEventListener('DOMContentLoaded', () => {
                             }
                         }).addTo(map);
 
-                        // Show state info
-                        stateNameElement.textContent = stateName;
-                        stateChairElement.innerHTML = `
-                            Chair: ${chairData[stateName]?.Chair || 'N/A'}<br>
-                            Regional Director: ${chairData[stateName]?.['Regional Director'] || 'N/A'}
-                        `;
-                        infoBox.classList.remove('hidden');
-                        defaultMessage.classList.add('hidden');
-
-                        // Add markers for this state only
                         markersLayer = L.layerGroup();
                         chaptersDataGlobal.forEach(row => {
-                            if (row['State'].trim() === stateName) {
-                                const lat = row['Latitude'];
-                                const lng = row['Longitude'];
-                                if (lat && lng) {
-                                    const marker = L.marker([+lat, +lng], { icon: customIcon });
-                                    marker.bindPopup(`
-                                        <b style="color:#0F1B79;">${row['ChapterName']}</b><br>
-                                        City: ${row['City']}<br>
-                                        Leader: ${row['ChapterLeaderName']}
-                                    `);
-                                    markersLayer.addLayer(marker);
-                                }
+                            const latitude = row['Latitude'];
+                            const longitude = row['Longitude'];
+                            const chapterStateName = row['DeterminedState'];
+
+                            if (chapterStateName === stateName && latitude && longitude) {
+                                const marker = L.marker([+latitude, +longitude], { icon: customIcon });
+                                marker.bindPopup(`
+                                    <b><span style="color: #0F1B79;">${row['ChapterName']}</span></b><br>
+                                    <i>${row['City']}</i><br>
+                                    Chapter Leader: ${row['ChapterLeaderName']}
+                                `);
+                                markersLayer.addLayer(marker);
                             }
                         });
+
                         map.addLayer(markersLayer);
-
-                        // Zoom to state
                         map.fitBounds(layer.getBounds());
-
-                        // Show exit button
-                        exitButton.style.display = 'block';
+                        showExitButton();
                     }
                 });
             }
         }).addTo(map);
+        applyFontToMap();
     }
 
-    // Exit button resets the map
-    exitButton.addEventListener('click', () => {
+    function resetMap() {
         if (selectedStateLayer) map.removeLayer(selectedStateLayer);
         if (markersLayer) map.removeLayer(markersLayer);
-        if (!map.hasLayer(markerClusterGroup)) map.addLayer(markerClusterGroup);
+        if (geojsonLayer) map.removeLayer(geojsonLayer);
 
         infoBox.classList.add('hidden');
         defaultMessage.classList.remove('hidden');
-        exitButton.style.display = 'none';
+        hideExitButton();
 
         map.setView([39.8283, -98.5795], 5);
-    });
+        if (!map.hasLayer(markerClusterGroup)) map.addLayer(markerClusterGroup);
+        addStatesToMap();
+    }
 
-    // Load chairs CSV
-    d3.csv('chairs.csv').then(chairsData => {
+    exitButton.addEventListener('click', resetMap);
+
+    Promise.all([
+        d3.csv('chairs.csv'),
+        d3.csv('chapters.csv')
+    ]).then(([chairsData, chaptersData]) => {
         chairsData.forEach(row => {
-            const stateName = row['State'].trim();
-            chairData[stateName] = {
-                Chair: row['Chair'].trim(),
-                'Regional Director': row['Regional Director']?.trim() || 'N/A'
-            };
+            const stateName = row.State.trim();
+            if (stateName) {
+                chairData[stateName] = { Chair: row.Chair };
+            }
         });
 
-        // Load chapters CSV
-        d3.csv('chapters.csv').then(chaptersData => {
-            chaptersDataGlobal = chaptersData;
+        chaptersDataGlobal = chaptersData;
 
-            // Count chapters per state
-            chaptersDataGlobal.forEach(row => {
-                const stateName = row['State'].trim();
-                stateCounts[stateName] = (stateCounts[stateName] || 0) + 1;
-            });
+        fetch('https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json')
+            .then(response => response.json())
+            .then(geojsonData => {
+                allStatesGeoJSON = geojsonData;
 
-            // Load US states GeoJSON
-            fetch('https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json')
-                .then(response => response.json())
-                .then(geojsonData => {
-                    allStatesGeoJSON = geojsonData;
+                chaptersDataGlobal.forEach(row => {
+                    const latitude = row['Latitude'];
+                    const longitude = row['Longitude'];
+                    const city = row['City'];
+                    const chapterName = row['ChapterName'];
+                    const chapterLeaderName = row['ChapterLeaderName'];
 
-                    initializeMap();
-                    addClusteredMarkers();
-                    addStatesToMap();
+                    if (latitude && longitude && chapterName && city && chapterLeaderName) {
+                        const point = turf.point([+longitude, +latitude]);
+                        let chapterStateName = null;
+
+                        for (let i = 0; i < allStatesGeoJSON.features.length; i++) {
+                            const stateFeature = allStatesGeoJSON.features[i];
+                            if (turf.booleanPointInPolygon(point, stateFeature)) {
+                                chapterStateName = stateFeature.properties.name.trim();
+                                break;
+                            }
+                        }
+
+                        if (chapterStateName) {
+                            stateCounts[chapterStateName] = (stateCounts[chapterStateName] || 0) + 1;
+                            row['DeterminedState'] = chapterStateName;
+                        }
+                    }
                 });
-        });
-    });
+
+                geojsonData.features = geojsonData.features.filter(feature => {
+                    const stateName = feature.properties.name.trim();
+                    return stateCounts[stateName] > 0;
+                });
+
+                allStatesGeoJSON = geojsonData;
+
+                initializeMap();
+                addClusteredMarkers();
+                addStatesToMap();
+            })
+            .catch(error => console.error('Error loading GeoJSON:', error));
+    }).catch(error => console.error('Error loading CSVs:', error));
 });
