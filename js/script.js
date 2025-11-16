@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const defaultMessage = document.getElementById('default-message');
     const stateNameElement = document.getElementById('state-name');
     const stateChairElement = document.getElementById('state-chair');
+    const regionalDirectorElement = document.getElementById('regional-director'); // NEW
     const exitButton = document.getElementById('exit-button');
 
     let map;
@@ -139,6 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         stateNameElement.textContent = stateName;
                         stateChairElement.textContent = chairInfo ? chairInfo.Chair : 'N/A';
+                        regionalDirectorElement.textContent = (chairInfo && chairInfo.RegionalDirector) ? chairInfo.RegionalDirector : 'N/A'; // NEW
                         infoBox.classList.remove('hidden');
                         defaultMessage.classList.add('hidden');
 
@@ -201,7 +203,9 @@ document.addEventListener('DOMContentLoaded', () => {
         chairsData.forEach(row => {
             const stateName = row.State.trim();
             if (stateName) {
-                chairData[stateName] = { Chair: row.Chair };
+                chairData[stateName] = { 
+                    Chair: row.Chair,
+                    RegionalDirector: row.RegionalDirector // NEW – column in chairs.csv
             }
         });
 
