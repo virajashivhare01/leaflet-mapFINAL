@@ -1,6 +1,6 @@
 WKT,First name,Last name,City,State/Province,State/Province Abbreviated,Zip code,Country,ChapterLeaderName,ChapterName,State,Latitude,Longitude
 POINT(-111.876183 40.758701),Najma,Ahmed (Email: najmaamer365@gmail.com),Salt Lake City,Utah,UT,84103,USA,Najma Ahmed (Email: najmaamer365@gmail.com),West High Democrats,Utah,40.758701,-111.876183
-POINT(-111.880768 40.889389),John,Alley,Bountiful,Utah,UT,84010,USA,John Alley,Bountiful High Democrats,Utah,40.889389,-111.880768
+POINT(-111.880768 40.889389),John,Alley (Email: insert email here),Bountiful,Utah,UT,84010,USA,John Alley,Bountiful High Democrats,Utah,40.889389,-111.880768
 POINT(-74.2884 40.6595),Caleb,Drexler (Email: calebtdrexler@gmail.com),Union County,Pennsylvania,PA,84009,USA,Caleb Drexler (Email: calebtdrexler@gmail.com),Union County High School Democrats,Pennsylvania,40.6595,-74.2884
 POINT(-75.2507 39.9982),Jonah,Vog (Email: s018862@students.lmsd.org),Montgomery County,Pennsylvania,PA,84036,USA,Jonah Vog (Email: s018862@students.lmsd.org),Lower Merion High School Democrats,Pennsylvania,39.9982,-75.2507
 POINT(-75.389477 40.536525),Jonathan,Saunders (Email: jonathanesaunders@icloud.com),Lehigh,Pennsylvania,PA,19096,USA,Jonathan Saunders (Email: jonathanesaunders@icloud.com),Southern Lehigh High School Democrats,Pennsylvania,40.536525,-75.389477
@@ -9,7 +9,7 @@ POINT(-86.7019 37.2056),Ava,Gerber (Email: ava.gerber0805@gmail.com),Butler Coun
 POINT(-76.3379 39.9455),Keiji,Uehara (Email: 27ueharak@tesdk12.net),Conestoga,Pennsylvania,PA,16001,USA,Keiji Uehara (Email: 27ueharak@tesdk12.net),Conestoga Young Democrats,Pennsylvania,39.9455,-76.3379
 POINT(-76.64 40.28),Bridget,Hallinan (Email: bridgethallinan09@gmail.com),Hershey,Pennsylvania,PA,19087,USA,Bridget Hallinan (Email: bridgethallinan09@gmail.com),Hershey High School Young Democrats,Pennsylvania,40.28,-76.64
 POINT(-75.1652 39.9526),Andreo,Bono (Email: andreo.s.bono@outlook.com),Philadelphia,Pennsylvania,PA,17033,USA,Andreo Bono (Email: andreo.s.bono@outlook.com),Philadelphia-area High School Democrats,Pennsylvania,39.9526,-75.1652
-POINT(-75.43 39.92),Asher,Matthews,Delaware County,Pennsylvania,PA,19104,USA,Asher Matthews,Penncrest High School Democrats,Pennsylvania,39.92,-75.43
+POINT(-75.43 39.92),Asher,Matthews ,Delaware County,Pennsylvania,PA,19104,USA,Asher Matthews,Penncrest High School Democrats,Pennsylvania,39.92,-75.43
 POINT(-121.9836 47.548),Trisha,Sudhakar (Email: trisha.sudhakar22@gmail.com),King County,Washington,WA,98057,USA,Trisha Sudhakar (Email: trisha.sudhakar22@gmail.com),King County Democrats,Washington,47.548,-121.9836
 POINT(-121.8339 48.033),"Dillon, Nilima","Adams (Email: dtadams425@gmail.com), Pahari (Email: nilimap2066@gmail.com)",Snohomish County,Washington,WA,98104,USA,"Nilima Dillon Adams (Email: dtadams425@gmail.com), Nilima Pahari (Email: nilimap2066@gmail.com)",Snohomish County Democrats,Washington,48.033,-121.8339
 POINT(-122.3375 48.4201),Decatur,Carpenter-Eels (Email: decaturce@gmail.com),Mount Vernon,Washington,WA,98201,USA,Decatur Carpenter-Eels (Email: decaturce@gmail.com),Mount Vernon Democrats,Washington,48.4201,-122.3375
@@ -22,7 +22,6 @@ POINT(-122.4027 45.5857),Yu-Cheng,Liang (Email: yuchengliangchess@gmail.com),Cam
 POINT(-73.8911 40.8784),Ila,Misra (Email: ilamisra107@gmail.com),Bronx,New York,NY,10468,USA,Ila Misra (Email: ilamisra107@gmail.com),Bronx High School Democrats,New York,40.8784,-73.8911
 POINT(-73.9767 40.6891),Elliot,Baim (Email: elliotbaim@gmail.com),Brooklyn,New York,NY,11201,USA,Elliot Baim (Email: elliotbaim@gmail.com),Brooklyn Technical High School Democrats,New York,40.6891,-73.9767
 POINT(-73.9822 40.7685),Ava,Karaganis (Email: ava.karaganis@gmail.com),Manhattan,New York,NY,10025,USA,Ava Karaganis (Email: ava.karaganis@gmail.com),Manhattan Democrats,New York,40.7685,-73.9822
-POINT(-73.87 41.01),Noah,Adler (Email: adler42noah@gmail.com),Dobbs Ferry,New York,NY,10533,USA,Noah Adler (Email: adler42noah@gmail.com),Masters Democrats,New York,41.01,-73.87
 POINT(-73.99 40.73),Wilson,Urist (Email: wurist@gcschool.org),Manhattan,New York,NY,10003,USA,Wilson Urist (Email: wurist@gcschool.org),Grace Church Democrats,New York,40.73,-73.99
 POINT(-73.7949 40.7282),Aki,Benjamin (Email: akiluxbenjamin@gmail.com),Queens,New York,NY,11375,USA,Aki Benjamin (Email: akiluxbenjamin@gmail.com),Queens Democrats,New York,40.7282,-73.7949
 POINT(-73.9746 40.7614),Sam,Lauriello (Email: slauriello26@regis.org),Manhattan,New York,NY,10028,USA,Sam Lauriello (Email: slauriello26@regis.org),Regis High School Democrats,New York,40.7614,-73.9746
@@ -30,10 +29,10 @@ POINT(-73.97 40.79),Michael,Sorgen (Email: mksorgen@gmail.com),Manhattan,New Yor
 POINT(-73.9444 40.7098),Jin,Park (Email: jingam12345678@gmail.com),Brooklyn,New York,NY,10025,USA,Jin Park (Email: jingam12345678@gmail.com),TBLS Democrats,New York,40.7098,-73.9444
 POINT(-74.3118 41.3912),Noa,Snyder (Email: snydernoa@gmail.com),Orange County,New York,NY,10940,USA,Noa Snyder (Email: snydernoa@gmail.com),Orange County Democrats,New York,41.3912,-74.3118
 POINT(-74.1342 41.3226),Cameron,Barclay (Email: barclaycameron26@gmail.com),Woodbury,New York,NY,10940,USA,Cameron Barclay (Email: barclaycameron26@gmail.com),Monroe and Woodbury Democrats,New York,41.3226,-74.1342
-POINT(-78.8789 42.8869),Phea,Grassotti,Buffalo,New York,NY,14222,USA,Phea Grassotti,Buffalo Democrats,New York,42.8869,-78.8789
+POINT(-78.8789 42.8869),Phea,Grassotti (Email: insert email here),Buffalo,New York,NY,14222,USA,Phea Grassotti,Buffalo Democrats,New York,42.8869,-78.8789
 POINT(-73.9442 40.6782),Christine,Li (Email: christinelli927@gmail.com),Brooklyn,New York,NY,11215,USA,Christine Li (Email: christinelli927@gmail.com),Brooklyn Democrats,New York,40.6782,-73.9442
 POINT(-105.7821 39.5501),Nicholas,Ingram (Email: nick.ingram@crms.org),Carbondale,Colorado,CO,81621,USA,Nicholas Ingram (Email: nick.ingram@crms.org),Colorado Rocky Mountain School Democrats,Colorado,39.5501,-105.7821
-POINT(-105.0844 40.5853),Julia,Yalin,Fort Collins,Colorado,CO,80521,USA,Julia Yalin,Fort Collins Democrats,Colorado,40.5853,-105.0844
+POINT(-105.0844 40.5853),Julia,Yalin (Email: insert email here),Fort Collins,Colorado,CO,80521,USA,Julia Yalin,Fort Collins Democrats,Colorado,40.5853,-105.0844
 POINT(-96.6323 33.1849),James,Houston (Email: james.houstoo032@gmail.com),McKinney,Texas,TX,75071,USA,James Houston (Email: james.houstoo032@gmail.com),McKinney Area Democrats,Texas,33.1849,-96.6323
 POINT(-97.7431 30.2672),Ved,Hoskrote (Email: vrhoskote@gmail.com),Austin,Texas,TX,78701,USA,Ved Hoskrote (Email: vrhoskote@gmail.com),Austin Democrats,Texas,30.2672,-97.7431
 POINT(-97.179 33.1419),Sania,Abraham (Email: abrahamsania09@gmail.com),Denton County,Texas,TX,76201,USA,Sania Abraham (Email: abrahamsania09@gmail.com),Denton County Democrats,Texas,33.1419,-97.179
@@ -46,8 +45,8 @@ POINT(-95.5 29.53),Kaedyn-Rose,Dove (Email: kaedynrose2009@gmail.com),Missouri C
 POINT(-96.6608 33.1097),Hana,Fayed (Email: hananothannah0@gmail.com),Allen,Texas,TX,75002,USA,Hana Fayed (Email: hananothannah0@gmail.com),Allen High School Democrats,Texas,33.1097,-96.6608
 POINT(-95.3103 29.7752),Sneha,Kunwor (Email: sneha.kunwor@gmail.com),Houston,Texas,TX,77002,USA,Sneha Kunwor (Email: sneha.kunwor@gmail.com),Harris County Democrats,Texas,29.7752,-95.3103
 POINT(-71.2637 41.525),Adelino,Vellis (Email: adelinovellis@gmail.com),Aquidneck Island,Rhode Island,RI,2842,USA,Adelino Vellis (Email: adelinovellis@gmail.com),Aquidneck Island High School Democrats,Rhode Island,41.525,-71.2637
-POINT(-73.3709 41.256),Allison,Tran,Fairfield County,Connecticut,CT,6824,USA,Allison Tran,Fairfield County High School Democrats,Connecticut,41.256,-73.3709
-POINT(-72.8615 41.6167),Max,Korp,Southington,Connecticut,CT,6489,USA,Max Korp,Southington High School Democrats,Connecticut,41.6167,-72.8615
+POINT(-73.3709 41.256),Allison,Tran (Email: insert email here),Fairfield County,Connecticut,CT,6824,USA,Allison Tran,Fairfield County High School Democrats,Connecticut,41.256,-73.3709
+POINT(-72.8615 41.6167),Max,Korp (Email: insert email here),Southington,Connecticut,CT,6489,USA,Max Korp,Southington High School Democrats,Connecticut,41.6167,-72.8615
 POINT(-98.58 29.57),Malachi,Wiafe (Email: malachi.wiafe@gmail.com),Las Vegas,Nevada,NV,89102,USA,Malachi Wiafe (Email: malachi.wiafe@gmail.com),Clark High School Democrats of America,Nevada,29.57,-98.58
 POINT(-110.8881 32.2269),Ali,Al Kinani (Email: alkinaniali09@gmail.com),Las Vegas,Nevada,NV,85719,USA,Ali Al Kinani (Email: alkinaniali09@gmail.com),High School Democrats of Rincon-University,Nevada,32.2269,-110.8881
 POINT(-88.37 44.25),William,Quick (Email: williamqui0914@gmail.com),Appleton,Wisconsin,WI,54915,USA,William Quick (Email: williamqui0914@gmail.com),Appleton East High School Democrats,Wisconsin,44.25,-88.37
@@ -77,7 +76,7 @@ POINT(-71.19 42.31),Boston,Bulis (Email: tamarzbulis@gmail.com),Newton,Massachus
 POINT(-122.9353 47.0506),Grey,Simpson (Email: greysimpson2009@gmail.com),Boise,Idaho,ID,83704,USA,Grey Simpson (Email: greysimpson2009@gmail.com),Capital High School Democrats,Idaho,47.0506,-122.9353
 POINT(-74.564 40.3741),Hershal,Mehta (Email: hkmehta2007@gmail.com),South Brunswick,New Jersey,NJ,8852,USA,Hershal Mehta (Email: hkmehta2007@gmail.com),South Brunswick High School Democrats,New Jersey,40.3741,-74.564
 POINT(-92.031 34.58),Alaine,Mills (Email: alaines.mills@gmail.com),Cabot,Arkansas,AR,72023,USA,Alaine Mills (Email: alaines.mills@gmail.com),Cabot High School Democrats,Arkansas,34.58,-92.031
-POINT(-94.1026 36.033),Fayetteville,Unknown,Fayetteville,Arkansas,AR,28301,USA,Fayetteville,Fayetteville High School Democrats,Arkansas,36.033,-94.1026
+POINT(-94.1026 36.033),Fayetteville,(Unknown — Fayetteville) (Email: insert email here),Fayetteville,Arkansas,AR,28301,USA,Fayetteville,Fayetteville High School Democrats,Arkansas,36.033,-94.1026
 POINT(-94.1467 36.3),Ruby,Diaz (Email: rdiaz07@rpsar.net),Rogers,Arkansas,AR,72756,USA,Ruby Diaz (Email: rdiaz07@rpsar.net),Rogers High School Democrats,Arkansas,36.3,-94.1467
 POINT(-79.0779 33.8511),Martha,Winningham (Email: mgwinningham07@gmail.com),Conway,South Carolina,SC,29526,USA,Martha Winningham (Email: mgwinningham07@gmail.com),Conway High School Democrats,South Carolina,33.8511,-79.0779
 POINT(-92.4588 44.0193),Makayla,Anderson (Email: amakayla900@gmail.com),Rochester,Minnesota,MN,55906,USA,Makayla Anderson (Email: amakayla900@gmail.com),HSDA Rochester,Minnesota,44.0193,-92.4588
@@ -116,58 +115,86 @@ POINT(-82.535 35.486),Luke,Groth (Email: lgroth4477@k12bcs.orgs),Asheville,North
 POINT(-82.9932 40.0155),Harun,Siddiqui (Email: harun186282@gmail.com),Franklin County,Ohio,OH,43002,USA,Harun Siddiqui (Email: harun186282@gmail.com),Franklin County High School Democrats,Ohio,40.0155,-82.9932
 POINT(-79.9449 37.2709),Miriam,Lee (Email: mlee275@students.rcps.info),Roanoke,Virginia,VA,24018,USA,Miriam Lee (Email: mlee275@students.rcps.info),Roanoke City High School Democrats,Virginia,37.2709,-79.9449
 POINT(-120.6662 35.2811),Chase,Martin (Email: cmartin@student.missionprep.org),San Francisco,California,CA,94110,USA,Chase Martin (Email: cmartin@student.missionprep.org),Mission Prep High School Democrats,California,35.2811,-120.6662
-POINT (-73.8174291 40.7654301),Jin-Gam,Park (Email: jingam12345678@gmail.com),Flushing,New York,NY,11355,US,Jin-Gam Park,Queens,NY,40.7654301,-73.8174291
-POINT (-83.156183 42.431153),Aiden,Pearce (Email: coojsjsj@gmail.com),Detroit,Michigan,MI,48221,US,Aiden,Wayne County High School Democrats,MI,42.431153,-83.156183
-POINT (-111.926018 33.4942189),Jesmina,deGuzman (Email: jesmina.deguzman25@gmail.com),Scottsdale,Arizona,AZ,85258,US,Jesmina deGuzman,Arizona High School Democrats,AZ,33.4942189,-111.926018
-POINT (-93.76396582 41.69081353),Aravind,Balaji (Email: aravindbalaji2007@gmail.com),Johnston,Iowa,IA,50131,US,Aravind Balaji,Johnston Young Democrats,IA,41.69081353,-93.76396582
-POINT (-87.91270907 43.06477165),Avana,Kelly (Email: avanakelly@gmail.com),Milwaukee,Wisconsin,WI,53212,US,Avana Kelly,Milwaukee Chapter,WI,43.06477165,-87.91270907
-POINT (-86.17868101 32.39214098),Yash,Param (Email: yashhparam@gmail.com),Montgomery,Alabama,AL,36117,US,Yash Param,Alabama Democratic Youth,AL,32.39214098,-86.17868101
-POINT (-121.8746789 37.6624312),Jiya,Channon,Pleasanton,California,CA,94566,US,Jiya Channon,East Bay Chapter,CA,37.6624312,-121.8746789
-POINT (-121.9200346 37.51545831),Gavia,Grewal,Fremont,California,CA,94539,US,Gavia Grewal,East Bay High School Democrats,CA,37.51545831,-121.9200346
-POINT (-90.27529928 30.04192217),Neal,Tandon (Email: nealtandon.nt@gmail.com),Kenner,Louisiana,LA,70065,US,Neal Tandon,Haynes Academy,LA,30.04192217,-90.27529928
-POINT (-117.7612286 33.75528817),Adrian,Shou (Email: adrianshou2009@gmail.com),Irvine,California,CA,92602,US,Adrian Shou,Irvine,CA,33.75528817,-117.7612286
-POINT (-86.78175833 36.1595673),Eliot,Watson,Nashville,Tennessee,TN,37203,US,Eliot Watson,Hume-Fogg High School Democrats,TN,36.1595673,-86.78175833
-POINT (-86.774436 36.087837),Bea,Robbins (Email: bea.robbins.26@harpethhall.org),Nashville,Tennessee,TN,37204,US,Bea Robbins,Harpeth Hall,TN,36.087837,-86.774436
-POINT (-77.1929215 39.1399187),Azimullah,Rifai (Email: azimullahrifai@gmail.com),Gaithersburg,Maryland,MD,20877,US,Azimullah Rifai,MoCo High School Democrats of America,MD,39.1399187,-77.1929215
-POINT (-74.047455 40.7215682),Janhitha,Veeramachaneni (Email: janhitha@gmail.com),Jersey City,New Jersey,NJ,7306,US,Janhitha Veeramachaneni,Jersey City High School Democrats,NJ,40.7215682,-74.047455
-POINT (-77.9135976 34.1487822),Simeon,Cole (Email: colesimeon211@gmail.com),Silver Lake,North Carolina,NC,28412,US,Simeon Cole,New Hanover County Teen Democrats,NC,34.1487822,-77.9135976
-POINT (-80.8430827 35.2272086),Eshan,Korat (Email: eshankorat2026@gmail.com),Charlotte,North Carolina,NC,28269,US,Eshan Korat,Cabarrus County High School Democrats of America,NC,35.2272086,-80.8430827
-POINT (-121.8746789 37.6624312),Jiya,Channon,Pleasanton,California,CA,94566,US,Jiya Channon,East Bay Chapter,CA,37.6624312,-121.8746789
-POINT (-115.2612484 36.1613294),Julian,Salvador (Email: ambassador.julian.sa@gmail.com),Las Vegas,Nevada,NV,89147,US,Julian Salvador Avila,High School Democrats of Spring Valley,NV,36.1613294,-115.2612484
-POINT (-83.71615389 42.27554121),Zara,Lin (Email: huronmihsd@gmail.com),Ann Arbor,Michigan,MI,48104,US,Zara Lin,Ann Arbor Huron Democrats,MI,42.27554121,-83.71615389
-POINT (-122.8950075 47.0451022),Gavin,Cruz (Email: gavinbcruz@gmail.com),Olympia,Washington,WA,98501,US,Gavin Cruz,Thurston County,WA,47.0451022,-122.8950075
-POINT (-83.305784 42.55928),Rishiv,Ramesh (Email: rishivramesh13@gmail.com),Bloomfield Township,Michigan,MI,48302,US,Rishiv Ramesh,Bloomfield-Troy Chapter,MI,42.55928,-83.305784
-POINT (-97.57548681 35.58127672),Nick,Hickman (Email: nghickman27@students.bmchs.org),Oklahoma City,Oklahoma,OK,73120,US,Nick Hickman,High School Democrats of Oklahoma,OK,35.58127672,-97.57548681
-POINT (-121.2357828 38.7907339),Sean Colaljo,Colaljo (Email: s.colaljo.c@gmail.com),Rocklin,California,CA,95765,US,Sean Colaljo,Whitney High School Democrats,CA,38.7907339,-121.2357828
-POINT (-85.275082 41.029891),Malek,Kamal (Email: malekkamal884@gmail.com),Fort Wayne,Indiana,IN,46804,US,Malek Kamal,Homestead High School's Young Progressives Club,IN,41.029891,-85.275082
-POINT (-75.0090586 39.9359462),Harvin,Dam (Email: harvindam1@gmail.com),Cherry Hill Mall,New Jersey,NJ,8003,US,Harvin Dam,Camden County Democrats of America,NJ,39.9359462,-75.0090586
-POINT (-71.4169647 41.8119733),Anmol,Gopalak (Email: anmolgopalak18@gmail.com),Providence,Rhode Island,RI,2860,US,Anmol Gopalak,Rhode Island High School Democrats,RI,41.8119733,-71.4169647
-POINT (-74.37093489 40.6004166),Disha,Varkala ,Edison,New Jersey,NJ,8820,US,Disha Varkala,Middlesex County Community Chapter,NJ,40.6004166,-74.37093489
-POINT (-74.07736407 40.7849072),Shashwath,Inamdar (Email: anmolgopalak18@gmail.com),Secaucus,New Jersey,NJ,7094,US,Shashwath Inamdar,Secaucus HSDA,NJ,40.7849072,-74.07736407
-POINT (-158.017044 21.444645),Sofia,Belhaj,Mililani,Hawaii,HI,96789,US,Sofia Belhaj,Mililani HS Dems- Elderly Care Homes,HI,21.444645,-158.017044
-POINT (-77.58061668 38.7261989),Sid,Butna (Email: sidbutna@gmail.com),Nokesville,Virginia,VA,20181,US,Sid Butna,Patriot HsDems,VA,38.7261989,-77.58061668
-POINT (-121.9318642 37.54486041),Cham,Yu (Email: hamchamyu@gmail.com),Fremont,California,CA,94539,US,Cham Yu,Mission San Jose High School Democrats,CA,37.54486041,-121.9318642
-POINT (-75.522459 40.134163),Gabriel,Rossi Gross (Email: amross82076@gmail.com),Phoenixville,PA 19460,Phoenixville,Pennsylvania,PA,19460,US,Phoenixville,40.134163,-75.522459
-POINT (-74.31727011 40.78245714),Saanvi,Kulkarni (Email: saanvikulk@gmail.com),Livingston,New Jersey,NJ,7039,US,Saanvi Kulkarni,Livingston High School Democrats,NJ,40.78245714,-74.31727011
-POINT (-74.03534477 40.90123932),Chloe,Cho (Email: chloeyoonacho@gmail.com),Hackensack,New Jersey,NJ,7601,US,Chloe Cho,Bergen County Academies,NJ,40.90123932,-74.03534477
-POINT (-73.87179213 41.01309325),Noah,Adler (Email: adler42noah@gmail.com),Dobbs Ferry,New York,NY,10522,US,Noah Adler,The Masters School Young Democrats Club,NY,41.01309325,-73.87179213
-POINT (-74.43891604 40.42223146),Sahil,Kochhar (Email:  skochhar@ebnet.org),East Brunswick,New Jersey,NJ,8816,US,Sahil Kochhar,East Brunswick HS Democrats,NJ,40.42223146,-74.43891604
-POINT (-86.1274888 40.0428151),Rachel,Couch ,Westfield,Indiana,IN,46074,US,Leo Sniderman,Park Tudor Young Democrats,IN,40.0428151,-86.1274888
-POINT (-76.93390599 39.3217436),Saran,Toure (Email: djiminitoure@icloud.com),Marriottsville,Maryland,MD,21104,US,Saran Toure,Young Democrats of HoCo,MD,39.3217436,-76.93390599
-POINT (-118.3763575 33.76311409),Mason,Kim (Email: nitron12k@gmail.com),Rancho Palos Verdes,California,CA,90275,US,Mason Kim,Peninsula Dems,CA,33.76311409,-118.3763575
-POINT (-71.0019444 43.0163179),Elliot,Most (Email: elliotmost@gmail.com),Exeter,New Hampshire,NH,3833,US,Elliot Most,Exeter High School HSDA,NH,43.0163179,-71.0019444
-POINT (-76.47254049 39.325328),Brianna,Zheng (Email: briannazheng315@gmail.com),Essex,Maryland,MD,21221,US,Brianna Zheng,ET Dems,MD,39.325328,-76.47254049
-POINT (-94.60737043 39.0361601),Annabelle,Fernandez (Email: annabelle.faith.fernandez@gmail.com),Kansas City,Missouri,MO,64112,US,Annabelle Fernandez,Pembroke Hill Liberals Club,MO,39.0361601,-94.60737043
-POINT (-84.18002657 34.09046998),Ankita,Jaikumar (Email: ankita.jkhatri@gmail.com),Cumming,Georgia,GA,30041,US,Ankita Jaikumar,Forsyth County High School Democrats,GA,34.09046998,-84.18002657
-POINT (-90.468121 38.690276),Ray,Rao (Email: rayraowork@gmail.com),St. Louis,Missouri,MO,63146,US,Ray Rao,Parkway North High School Civics Club,MO,38.690276,-90.468121
-POINT (-85.85283422 37.70098748),Michelle,Zheng (Email: michellez930611@gmail.com),Elizabethtown,Kentucky,KY,42701,US,Michelle Zheng,Elizabethtown High School Young Democrats,KY,37.70098748,-85.85283422
-POINT (-89.3837613 43.074761),Aharon,Shelef (Email: aharon.shelef@gmail.com),Madison,Wisconsin,WI,53703,US,Aharon Shelef,Madison West High School Democrats,WI,43.074761,-89.3837613
-POINT (-76.924933 38.98979),Sofia,Guerrero,Lanham,Maryland,MD,20706,US,Sofia Guerrero,Greenbelt HSDA,MD,38.98979,-76.924933
-POINT (-77.3676791 39.1233504),Siddhant,Kapoor ,Woodbridge,Virginia,VA,22191,US,Siddhant Kapoor,Woodbridge High School Democrats,VA,39.1233504,-77.3676791
-POINT (-78.90804501 35.99562943),Aditya,Ravipati,Durham,North Carolina,NC,27703,US,Aditya Ravipati,Durham School of the Arts HSDA,NC,35.99562943,-78.90804501
-POINT (-121.895 37.3382),Andrew,Cheng,San Jose,California,CA,95126,US,Andrew Cheng,San Jose CA Chapter,CA,37.3382,-121.895
-
-
-
-
-
+POINT (-73.8174291 40.7654301),Jin-Gam,Park (Email: jingam12345678@gmail.com),Flushing,New York,NY,11355,US,Jin-Gam Park,Queens,New York,40.7654301,-73.8174291
+POINT (-83.156183 42.431153),Aiden,Pearce (Email: coojsjsj@gmail.com),Detroit,Michigan,MI,48221,US,Aiden,Wayne County High School Democrats,Michigan,42.431153,-83.156183
+POINT (-111.926018 33.4942189),Jesmina,deGuzman (Email: jesmina.deguzman25@gmail.com),Scottsdale,Arizona,AZ,85258,US,Jesmina deGuzman,Arizona High School Democrats,Arizona,33.4942189,-111.926018
+POINT (-93.76396582 41.69081353),Aravind,Balaji (Email: aravindbalaji2007@gmail.com),Johnston,Iowa,IA,50131,US,Aravind Balaji,Johnston Young Democrats,Iowa,41.69081353,-93.76396582
+POINT (-87.91270907 43.06477165),Avana,Kelly (Email: avanakelly@gmail.com),Milwaukee,Wisconsin,WI,53212,US,Avana Kelly,Milwaukee Chapter,Wisconsin,43.06477165,-87.91270907
+POINT (-86.17868101 32.39214098),Yash,Param (Email: yashhparam@gmail.com),Montgomery,Alabama,AL,36117,US,Yash Param,Alabama Democratic Youth,Alabama,32.39214098,-86.17868101
+POINT (-121.8746789 37.6624312),Jiya,Channon,Pleasanton,California,CA,94566,US,Jiya Channon,East Bay Chapter,California,37.6624312,-121.8746789
+POINT (-121.9200346 37.51545831),Gavia Grewal,Grewal,Fremont,California,CA,94539,US,Gavia Grewal,East Bay High School Democrats,California,37.51545831,-121.9200346
+POINT (-90.27529928 30.04192217),Neal,Tandon (Email: nealtandon.nt@gmail.com),Kenner,Louisiana,LA,70065,US,Neal Tandon,Haynes Academy,Louisiana,30.04192217,-90.27529928
+POINT (-117.7612286 33.75528817),Adrian,Shou (Email: adrianshou2009@gmail.com),Irvine,California,CA,92602,US,Adrian Shou,Irvine,California,33.75528817,-117.7612286
+POINT (-86.78175833 36.1595673),Eliot,Watson,Nashville,Tennessee,TN,37203,US,Eliot Watson,Hume-Fogg High School Democrats,Tennessee,36.1595673,-86.78175833
+POINT (-86.774436 36.087837),Bea,Robbins (Email: bea.robbins.26@harpethhall.org),Nashville,Tennessee,TN,37204,US,Bea Robbins,Harpeth Hall,Tennessee,36.087837,-86.774436
+POINT (-77.1929215 39.1399187),Azimullah,Rifai (Email: azimullahrifai@gmail.com),Gaithersburg,Maryland,MD,20877,US,Azimullah Rifai,MoCo High School Democrats of America,Maryland,39.1399187,-77.1929215
+POINT (-74.047455 40.7215682),Janhitha,Veeramachaneni (Email: janhitha@gmail.com),Jersey City,New Jersey,NJ,7306,US,Janhitha Veeramachaneni,Jersey City High School Democrats,New Jersey,40.7215682,-74.047455
+POINT (-77.9135976 34.1487822),Simeon,Cole (Email: colesimeon211@gmail.com),Silver Lake,North Carolina,NC,28412,US,Simeon Cole,New Hanover County Teen Democrats,North Carolina,34.1487822,-77.9135976
+POINT (-80.8430827 35.2272086),Eshan,Korat (Email: eshankorat2026@gmail.com),Charlotte,North Carolina,NC,28269,US,Eshan Korat,Cabarrus County High School Democrats of America,North Carolina,35.2272086,-80.8430827
+POINT (-121.8746789 37.6624312),Jiya,Channon,Pleasanton,California,CA,94566,US,Jiya Channon,East Bay Chapter,California,37.6624312,-121.8746789
+POINT (-115.2612484 36.1613294),Julian,Salvador (Email: ambassador.julian.sa@gmail.com),Las Vegas,Nevada,NV,89147,US,Julian Salvador Avila,High School Democrats of Spring Valley,Nevada,36.1613294,-115.2612484
+POINT (-83.71615389 42.27554121),Zara,Lin (Email: huronmihsd@gmail.com),Ann Arbor,Michigan,MI,48104,US,Zara Lin,Ann Arbor Huron Democrats,Michigan,42.27554121,-83.71615389
+POINT (-122.8950075 47.0451022),Gavin,Cruz (Email: gavinbcruz@gmail.com),Olympia,Washington,WA,98501,US,Gavin Cruz,Thurston County,Washington,47.0451022,-122.8950075
+POINT (-83.305784 42.55928),Rishiv,Ramesh (Email: rishivramesh13@gmail.com),Bloomfield Township,Michigan,MI,48302,US,Rishiv Ramesh,Bloomfield-Troy Chapter,Michigan,42.55928,-83.305784
+POINT (-97.57548681 35.58127672),Nick,Hickman (Email: nghickman27@students.bmchs.org),Oklahoma City,Oklahoma,OK,73120,US,Nick Hickman,High School Democrats of Oklahoma,Oklahoma,35.58127672,-97.57548681
+POINT (-121.2357828 38.7907339),Sean Colaljo,Colaljo (Email: s.colaljo.c@gmail.com),Rocklin,California,CA,95765,US,Sean Colaljo,Whitney High School Democrats,California,38.7907339,-121.2357828
+POINT (-85.275082 41.029891),Malek,Kamal (Email: malekkamal884@gmail.com),Fort Wayne,Indiana,IN,46804,US,Malek Kamal,Homestead High School's Young Progressives Club,Indiana,41.029891,-85.275082
+POINT (-75.0090586 39.9359462),Harvin,Dam (Email: harvindam1@gmail.com),Cherry Hill Mall,New Jersey,NJ,8003,US,Harvin Dam,Camden County Democrats of America,New Jersey,39.9359462,-75.0090586
+POINT (-71.4169647 41.8119733),Anmol,Gopalak (Email: anmolgopalak18@gmail.com),Providence,Rhode Island,RI,2860,US,Anmol Gopalak,Rhode Island High School Democrats,Rhode Island,41.8119733,-71.4169647
+POINT (-74.37093489 40.6004166),Disha,Varkala ,Edison,New Jersey,NJ,8820,US,Disha Varkala,Middlesex County Community Chapter,New Jersey,40.6004166,-74.37093489
+POINT (-74.07736407 40.7849072),Shashwath,Inamdar (Email: anmolgopalak18@gmail.com),Secaucus,New Jersey,NJ,7094,US,Shashwath Inamdar,Secaucus HSDA,New Jersey,40.7849072,-74.07736407
+POINT (-158.017044 21.444645),Sofia,Belhaj,Mililani,Hawaii,HI,96789,US,Sofia Belhaj,Mililani HS Dems- Elderly Care Homes,Hawaii,21.444645,-158.017044
+POINT (-77.58061668 38.7261989),Sid,Butna (Email: sidbutna@gmail.com),Nokesville,Virginia,VA,20181,US,Sid Butna,Patriot HsDems,Virginia,38.7261989,-77.58061668
+POINT (-121.9318642 37.54486041),Cham,Yu (Email: hamchamyu@gmail.com),Fremont,California,CA,94539,US,Cham Yu,Mission San Jose High School Democrats,California,37.54486041,-121.9318642
+POINT (-74.31727011 40.78245714),Saanvi,Kulkarni (Email: saanvikulk@gmail.com),Livingston,New Jersey,NJ,7039,US,Saanvi Kulkarni,Livingston High School Democrats,New Jersey,40.78245714,-74.31727011
+POINT (-74.03534477 40.90123932),Chloe,Cho (Email: chloeyoonacho@gmail.com),Hackensack,New Jersey,NJ,7601,US,Chloe Cho,Bergen County Academies,New Jersey,40.90123932,-74.03534477
+POINT (-73.87179213 41.01309325),Noah,Adler (Email: adler42noah@gmail.com),Dobbs Ferry,New York,NY,10522,US,Noah Adler,The Masters School Young Democrats Club,New York,41.01309325,-73.87179213
+POINT (-74.43891604 40.42223146),Sahil,Kochhar (Email:  skochhar@ebnet.org),East Brunswick,New Jersey,NJ,8816,US,Sahil Kochhar,East Brunswick HS Democrats,New Jersey,40.42223146,-74.43891604
+POINT (-86.1274888 40.0428151),Rachel,Couch ,Westfield,Indiana,IN,46074,US,Leo Sniderman,Park Tudor Young Democrats,Indiana,40.0428151,-86.1274888
+POINT (-76.93390599 39.3217436),Saran,Toure (Email: djiminitoure@icloud.com),Marriottsville,Maryland,MD,21104,US,Saran Toure,Young Democrats of HoCo,Maryland,39.3217436,-76.93390599
+POINT (-118.3763575 33.76311409),Mason,Kim (Email: nitron12k@gmail.com),Rancho Palos Verdes,California,CA,90275,US,Mason Kim,Peninsula Dems,California,33.76311409,-118.3763575
+POINT (-71.0019444 43.0163179),Elliot,Most (Email: elliotmost@gmail.com),Exeter,New Hampshire,NH,3833,US,Elliot Most,Exeter High School HSDA,New Hampshire,43.0163179,-71.0019444
+POINT (-76.47254049 39.325328),Brianna,Zheng (Email: briannazheng315@gmail.com),Essex,Maryland,MD,21221,US,Brianna Zheng,ET Dems,Maryland,39.325328,-76.47254049
+POINT (-94.60737043 39.0361601),Annabelle,Fernandez (Email: annabelle.faith.fernandez@gmail.com),Kansas City,Missouri,MO,64112,US,Annabelle Fernandez,Pembroke Hill Liberals Club,Missouri,39.0361601,-94.60737043
+POINT (-84.18002657 34.09046998),Ankita,Jaikumar (Email: ankita.jkhatri@gmail.com),Cumming,Georgia,GA,30041,US,Ankita Jaikumar,Forsyth County High School Democrats,Georgia,34.09046998,-84.18002657
+POINT (-90.468121 38.690276),Ray,Rao (Email: rayraowork@gmail.com),St. Louis,Missouri,MO,63146,US,Ray Rao,Parkway North High School Civics Club,Missouri,38.690276,-90.468121
+POINT (-85.85283422 37.70098748),Michelle,Zheng (Email: michellez930611@gmail.com),Elizabethtown,Kentucky,KY,42701,US,Michelle Zheng,Elizabethtown High School Young Democrats,Kentucky,37.70098748,-85.85283422
+POINT (-89.3837613 43.074761),Aharon,Shelef (Email: aharon.shelef@gmail.com),Madison,Wisconsin,WI,53703,US,Aharon Shelef,Madison West High School Democrats,Wisconsin,43.074761,-89.3837613
+POINT (-76.924933 38.98979),Sofia,Guerrero,Lanham,Maryland,MD,20706,US,Sofia Guerrero,Greenbelt HSDA,Maryland,38.98979,-76.924933
+POINT (-77.3676791 39.1233504),Siddhant,Kapoor ,Woodbridge,Virginia,VA,22191,US,Siddhant Kapoor,Woodbridge High School Democrats,Virginia,39.1233504,-77.3676791
+POINT (-78.90804501 35.99562943),Aditya,Ravipati,Durham,North Carolina,NC,27703,US,Aditya Ravipati,Durham School of the Arts HSDA,North Carolina,35.99562943,-78.90804501
+POINT (-121.895 37.3382),Andrew,Cheng,San Jose,California,CA,95126,US,Andrew Cheng,San Jose CA Chapter,California,37.3382,-121.895
+POINT(-9605870.178705223 4328727.885401986),David Tyler,Farmer (Email: dtfarmer201@gmail.com),Lebanon,Tennessee,TN,37087,US,David Tyler Farmer,Wilson County High School Democrats,Tennessee,36.204,-86.291
+POINT(-17263983.22727167 2238353.165818781),Perseas,Vanebo (Email: pvanebo27@gmail.com),Hilo,Hawaii,HI,96720,US,Perseas Vanebo,Big Island HSDA,Hawaii,19.707,-155.085
+POINT(-9292394.492674999 5233154.520617332),Nikki,Rohmetra (Email: nikki.rohmetra@gmail.com),Novi,Michigan,MI,48375,US,Nikki Rohmetra,City of Novi Chapter,Michigan,42.48,-83.475
+POINT(-9444011.639114333 5252343.269231655),Shane,Fowler (Email: shanef@estoncountyhsdems.org),Charlotte,Michigan,MI,48813,US,Shane Fowler,Eaton County High School Democrats,Michigan,42.607,-84.837
+POINT(-8575608.29155689 4706928.426254484),Taylor,Coote (Email: taylormadee08@gmail.com),Washington,District of Columbia,DC,20001,US,Taylor Coote,Youth for Democracy,District of Columbia,38.897,-77.036
+POINT(-8329814.855919556 4889948.678984065),Payne,Engle (Email: 304642@bristoltwpsd.org),Levittown,Pennsylvania,PA,19054,US,Payne Engle,Harry S. Truman High School Democrats,Pennsylvania,40.165,-74.828
+POINT(-9448019.140782334 4607717.7585006),Elayna,Hamm (Email: hammelayna@gmail.com),Frankfort,Kentucky,KY,40601,US,Elayna Hamm,Franklin County High School Democrats,Kentucky,38.2,-84.873
+POINT(-9407832.804611556 4736436.19543542),Ananya Vinod,Kumar (Email: Ananya Vinod Kumar),Cincinnati,Ohio,OH,45202,US,Ananya Vinod Kumar,Southwest Ohio HSDA,Ohio,39.103,-84.512
+POINT(-8999290.273457112 4223427.422727089),"Cady,  Sophia","Norman,Palos (Email: normace@student.lncharter.org)",Huntersville,North Carolina,NC,28078,US,Cady Norman & Sophia Palos,Lake Norman Charter,North Carolina,35.437,-80.842
+POINT(-8999290.273457112 4223427.422727089),Liam,McCall (Email: liamjamesmccall@gmail.com),Huntersville,North Carolina,NC,28078,US,Alexis Irwin and Anita Chen,Highschool Democrats of Cox Highschool,North Carolina,35.437,-80.842
+POINT(-8457832.270313999 4418497.523777162),"Alexis, Anita","Irwin,Chen (Email: Alexis.j.irwin)",Virginia Beach,Virginia,VA,23462,US,Liam McCall,HSDA Reno Chapter,Virginia,36.852,-75.978
+POINT(-13337633.468048666 4797732.056879065),Jack,McNally (Email: jwmcnally2009@gmail.con),Reno,Nevada,NV,89501,US,Jack McNally,Carmel Young Progressives,Nevada,39.529,-119.814
+POINT(-9586611.906800667 4862745.8136124825),Gannon,Seyer (Email: seyergannon@gmail.com),Carmel,Indiana,IN,46032,US,Gannon Seyer,Boone County High School Democrats,Indiana,39.978,-86.118
+POINT(-9420523.226560224 4722101.305292381),Jeremiah,Gomes (Email: jrmhgomes@gmail.com),Florence,Kentucky,KY,41042,US,Jeremiah Gomes,Manchester High School Democrats,Kentucky,39.003,-84.626
+POINT(-8073223.429676778 5125842.325929296),Josh,Carter (Email: joshcarter07@gmail.com),Manchester,Connecticut,CT,6040,US,Josh Carter,Hudson High School Young Democrats,Connecticut,41.765,-72.523
+POINT(-9065859.328942223 5047806.319430838),Sophia,Chen (Email: sophiaffchen@gmail.com),Hudson,Ohio,OH,44236,US,Sophia Chen,Knox County High School Democrats,Ohio,41.24,-81.44
+POINT(-9341931.666071111 4295118.828074423),Nicholas,Ferrara (Email: nicholasferrara26@mybga.org),Knoxville,Tennessee,TN,37902,US,Nicholas Ferrara,Williamson County High School Democrats,Tennessee,35.96,-83.92
+POINT(-9670101.524883999 4290306.388377601),Nicholas,Wojack (Email: nickwojack27@gmail.com),Franklin,Tennessee,TN,37064,US,Nicholas Wojack,Montgomery County High School Democrats,Tennessee,35.925,-86.868
+POINT(-9724759.394855889 4373657.2326913625),Ehlinata,Reda (Email: ehlinata0reda@gmail.com),Clarksville,Tennessee,TN,37040,US,Ehlinata Reda,Davidson County High School Democrats,Tennessee,36.529,-87.359
+POINT(-9660416.729186334 4322935.278392487),Rubi,Salgado (Email: rubi123salgado13@gmail.com),Nashville,Tennessee,TN,37201,US,Rubi Salgado,Shelby County High School Democrats,Tennessee,36.162,-86.781
+POINT(-10024208.825048111 4184148.12903521),Jackson Lee,Wadkins (Email: jackson_lee_wadkins@aol.com),Memphis,Tennessee,TN,38103,US,Jackson Lee Wadkins,Owasso High School Democrats,Tennessee,35.149,-90.049
+POINT(-10670418.469013112 4338112.986543025),William,Jacobsen (Email: wjacobsen96@gmail.com),Owasso,Oklahoma,OK,74055,US,William Jacobsen,Tomah High School Democrats,Oklahoma,36.272,-95.854
+POINT(-10074859.193352 5465287.431563017),Shane,Fowler (Email: shanef@eatoncountyhsdems.org),Tomah,Wisconsin,WI,54660,US,Joseph Adair,Wichita County High School Democrats,Wisconsin,43.999,-90.504
+POINT(-9444011.639114333 5252343.269231655),Joseph,Adair (Email: josephadair2010@icloud.com),Charlotte,Michigan,MI,48813,US,Peyton Brown,Horizon Democrats,Michigan,42.607,-84.837
+POINT(-10964190.605175667 4017126.0249397885),Peyton,Brown (Email: peysbrown@gmail.com),Wichita Falls,Texas,TX,76301,US,Jairo Loaiza Lima,Newark High School Democrats of America,Texas,33.913,-98.493
+POINT(-12459545.324793557 3961059.2753483118),Jairo Loaiza,Lima (Email: jairojoseloaizalima@gmail.com),Scottsdale,Arizona,AZ,85254,US,Merziya Ahmed,Young Democrats,Arizona,33.494,-111.926
+POINT(-8432340.106925888 4819983.06857265),Merziya,Ahmed (Email: merziya.ahmed@gmail.com),Newark,Delaware,DE,19711,US,Max Korp & Thomas Kohl,Young Democrats of SHS,Delaware,39.683,-75.749
+POINT(-8575608.29155689 4706928.426254484),"Max, Thomas",Kohl (Email: maxkorp09@gmail.com),Washington,District of Columbia,DC,20001,US,Ayden Quinn,Students for Change,District of Columbia,38.897,-77.036
+POINT(-8575608.29155689 4706928.426254484),Ayden,Quinn (Email: trippyhippie489@gmai.com),Washington,District of Columbia,DC,20001,US,,Peninsula Dems,District of Columbia,38.897,-77.036
+POINT(-8112630.52941211 5101248.437456005),Timothy,Liu (Email: timothy.liu5671@gmail.com),Southington,Connecticut,CT,6489,US,,Port Aransas Democratic Front for America,Connecticut,41.6,-72.877
+POINT(-8575608.29155689 4706928.426254484),Jhostin,Jhostin (Email: 270016@gmail.com),Washington,District of Columbia,DC,20001,US,,Low country,District of Columbia,38.897,-77.036
+POINT(-13616934.070410112 4517734.547013818),Alyssia,Gibson (Email: alyssiagibson60@gmail.com),San Mateo,California,CA,94401,US,,Glacier High School Dems,California,37.562,-122.323
+POINT(-10805671.650308112 3227935.178494152),Asia,Roper (Email: 2000684@claremore.k12.ok.us),Port Aransas,Texas,TX,78373,US,,FL Democrats,Texas,27.833,-97.069
+POINT(-8897878.217358556 3865609.3134438097),Joshua,Lee (Email: josh.mt.lee@gmail.com),Charleston,South Carolina,SC,29401,US,,,South Carolina,32.776,-79.931
