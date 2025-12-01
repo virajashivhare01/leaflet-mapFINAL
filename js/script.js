@@ -152,10 +152,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
 
                         if (stateSlackLinkElement) {
-                            stateSlackLinkElement.textContent =
-                                chairInfo && chairInfo.SlackLink
-                                    ? chairInfo.SlackLink
-                                    : 'N/A';
+                            if (chairInfo && chairInfo.SlackLink) {
+                                stateSlackLinkElement.href = chairInfo.SlackLink;
+                                stateSlackLinkElement.style.display = 'inline-block';
+                            } else {
+                                stateSlackLinkElement.style.display = 'none';
+                            }
                         }
 
                         infoBox.classList.remove('hidden');
@@ -206,6 +208,10 @@ document.addEventListener('DOMContentLoaded', () => {
         defaultMessage.classList.remove('hidden');
         hideExitButton();
 
+        if (stateSlackLinkElement) {
+            stateSlackLinkElement.style.display = 'none';
+        }
+
         map.setView([39.8283, -98.5795], 5);
         if (!map.hasLayer(markerClusterGroup)) map.addLayer(markerClusterGroup);
         addStatesToMap();
@@ -224,7 +230,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const regionalDirector =
                 (row['Regional Director'] || row['RegionalDirector'] || '').trim();
 
-            const slackLink = (row['slack link'] || '').trim();
+            const slackLinkRaw =
+                (row.SlackLink ||
+                 row['Slack Link'] ||
+                 row['State Slack Link'] ||
+                 '').trim();
+
+            const slackLink = slackLinkRaw
+                ? (slackLinkRaw.startsWith('http') ? slackLinkRaw : 'https://' + slackLinkRaw)
+                : '';
 
             chairData[stateName] = {
                 Chair: (row.Chair || '').trim(),
