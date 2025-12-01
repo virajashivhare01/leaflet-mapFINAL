@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const defaultMessage = document.getElementById('default-message');
     const stateNameElement = document.getElementById('state-name');
     const stateChairElement = document.getElementById('state-chair');
+    // NEW: element to show regional director(s)
+    const stateRegionalDirectorElement = document.getElementById('state-regional-director');
     const exitButton = document.getElementById('exit-button');
 
     let map;
@@ -13,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let allStatesGeoJSON;
     let chaptersDataGlobal = [];
     const stateCounts = {};
-    const chairData = {};
+    const chairData = {}; // { [stateName]: { Chair: string, RegionalDirector: string } }
 
     function getColor(count) {
         return count > 10 ? '#08306b' :
@@ -138,7 +140,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (markersLayer) map.removeLayer(markersLayer);
 
                         stateNameElement.textContent = stateName;
-                        stateChairElement.textContent = chairInfo ? chairInfo.Chair : 'N/A';
+
+                        // Existing: show chair
+                        stateChairElement.textContent =
+                            chairInfo && chairInfo.Chair ? chairInfo.Chair : 'N/A';
+
+                        // NEW: show regional director(s) if element exists
+                        if (stateRegionalDirectorElement) {
+                            stateRegionalDirectorElement.textContent =
+                                chairInfo && chairInfo.RegionalDirector
+                                    ? chairInfo.RegionalDirector
+                                    : 'N/A';
+                        }
+
                         infoBox.classList.remove('hidden');
                         defaultMessage.classList.add('hidden');
 
@@ -201,7 +215,11 @@ document.addEventListener('DOMContentLoaded', () => {
         chairsData.forEach(row => {
             const stateName = row.State.trim();
             if (stateName) {
-                chairData[stateName] = { Chair: row.Chair };
+                // UPDATED: also store Regional Director column
+                chairData[stateName] = {
+                    Chair: row.Chair,
+                    RegionalDirector: row['Regional Director'] || ''
+                };
             }
         });
 
