@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
             maxZoom: 19
         }).addTo(map);
         L.control.zoom({ position: 'bottomright' }).addTo(map);
-
         applyFontToMap();
     }
 
@@ -122,13 +121,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 layer.on({
                     mouseover: e => {
-                        const layer = e.target;
-                        layer.setStyle({
+                        const layerHovered = e.target;
+                        layerHovered.setStyle({
                             weight: 5,
                             color: '#0F1B79'
                         });
                         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-                            layer.bringToFront();
+                            layerHovered.bringToFront();
                         }
                     },
                     mouseout: e => geojsonLayer.resetStyle(e.target),
@@ -250,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
 
                         if (chapterStateName) {
-                            stateCounts[chapterStateName] = (stateCounts[stateName] || 0) + 1;
+                            stateCounts[chapterStateName] = (stateCounts[chapterStateName] || 0) + 1;
                             row['DeterminedState'] = chapterStateName;
                         }
                     }
@@ -266,6 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 initializeMap();
                 addClusteredMarkers();
                 addStatesToMap();
-            });
-    });
+            })
+            .catch(error => console.error('Error loading GeoJSON:', error));
+    }).catch(error => console.error('Error loading CSVs:', error));
 });
