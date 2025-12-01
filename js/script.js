@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const defaultMessage = document.getElementById('default-message');
     const stateNameElement = document.getElementById('state-name');
     const stateChairElement = document.getElementById('state-chair');
-    // NEW: element to show regional director(s)
     const stateRegionalDirectorElement = document.getElementById('state-regional-director');
+    const stateSlackLinkElement = document.getElementById('state-slack-link');
     const exitButton = document.getElementById('exit-button');
 
     let map;
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let allStatesGeoJSON;
     let chaptersDataGlobal = [];
     const stateCounts = {};
-    const chairData = {}; // { [stateName]: { Chair: string, RegionalDirector: string } }
+    const chairData = {};
 
     function getColor(count) {
         return count > 10 ? '#08306b' :
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function initializeMap() {
-        map = L.map('map', { zoomControl: false }).setView([39.8283, -98.5795], 5); // Center on US
+        map = L.map('map', { zoomControl: false }).setView([39.8283, -98.5795], 5);
         L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
             attribution: 'Map data &copy; OpenStreetMap contributors',
             subdomains: 'abcd',
@@ -141,16 +141,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         stateNameElement.textContent = stateName;
 
-                        // Existing: show chair
                         stateChairElement.textContent =
                             chairInfo && chairInfo.Chair ? chairInfo.Chair : 'N/A';
 
-                        // NEW: show regional director(s) if element exists
                         if (stateRegionalDirectorElement) {
                             stateRegionalDirectorElement.textContent =
                                 chairInfo && chairInfo.RegionalDirector
                                     ? chairInfo.RegionalDirector
                                     : 'N/A';
+                        }
+
+                        if (stateSlackLinkElement) {
+                            if (chairInfo && chairInfo.SlackLink) {
+                                stateSlackLinkElement.href = chairInfo.SlackLink;
+                                stateSlackLinkElement.style.display = 'inline-block';
+                            } else {
+                                stateSlackLinkElement.style.display = 'none';
+                            }
                         }
 
                         infoBox.classList.remove('hidden');
@@ -201,6 +208,10 @@ document.addEventListener('DOMContentLoaded', () => {
         defaultMessage.classList.remove('hidden');
         hideExitButton();
 
+        if (stateSlackLinkElement) {
+            stateSlackLinkElement.style.display = 'none';
+        }
+
         map.setView([39.8283, -98.5795], 5);
         if (!map.hasLayer(markerClusterGroup)) map.addLayer(markerClusterGroup);
         addStatesToMap();
@@ -215,10 +226,10 @@ document.addEventListener('DOMContentLoaded', () => {
         chairsData.forEach(row => {
             const stateName = row.State.trim();
             if (stateName) {
-                // UPDATED: also store Regional Director column
                 chairData[stateName] = {
                     Chair: row.Chair,
-                    RegionalDirector: row['Regional Director'] || ''
+                    RegionalDirector: row['Regional Director'] || '',
+                    SlackLink: row.SlackLink || ''
                 };
             }
         });
