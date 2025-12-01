@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
             maxZoom: 19
         }).addTo(map);
         L.control.zoom({ position: 'bottomright' }).addTo(map);
-
         applyFontToMap();
     }
 
@@ -122,13 +121,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 layer.on({
                     mouseover: e => {
-                        const layer = e.target;
-                        layer.setStyle({
+                        const hl = e.target;
+                        hl.setStyle({
                             weight: 5,
                             color: '#0F1B79',
                         });
                         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-                            layer.bringToFront();
+                            hl.bringToFront();
                         }
                     },
                     mouseout: e => geojsonLayer.resetStyle(e.target),
@@ -196,87 +195,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }).addTo(map);
         applyFontToMap();
     }
-
-    function resetMap() {
-        if (selectedStateLayer) map.removeLayer(selectedStateLayer);
-        if (markersLayer) map.removeLayer(markersLayer);
-        if (geojsonLayer) map.removeLayer(geojsonLayer);
-
-        infoBox.classList.add('hidden');
-        defaultMessage.classList.remove('hidden');
-        hideExitButton();
-
-        map.setView([39.8283, -98.5795], 5);
-        if (!map.hasLayer(markerClusterGroup)) map.addLayer(markerClusterGroup);
-        addStatesToMap();
-    }
-
-    exitButton.addEventListener('click', resetMap);
-
-    Promise.all([
-        d3.csv('chairs.csv'),
-        d3.csv('chapters.csv')
-    ]).then(([chairsData, chaptersData]) => {
-        chairsData.forEach(row => {
-            const stateName = (row.State || '').trim();
-            if (!stateName) return;
-
-            const regionalDirector =
-                (row['Regional Director'] || row['RegionalDirector'] || '').trim();
-
-            const slackLink = (row['Slack Link'] || '').trim();
-
-            chairData[stateName] = {
-                Chair: (row.Chair || '').trim(),
-                RegionalDirector: regionalDirector,
-                SlackLink: slackLink
-            };
-        });
-
-        chaptersDataGlobal = chaptersData;
-
-        fetch('https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json')
-            .then(response => response.json())
-            .then(geojsonData => {
-                allStatesGeoJSON = geojsonData;
-
-                chaptersDataGlobal.forEach(row => {
-                    const latitude = row['Latitude'];
-                    const longitude = row['Longitude'];
-                    const city = row['City'];
-                    const chapterName = row['ChapterName'];
-                    const chapterLeaderName = row['ChapterLeaderName'];
-
-                    if (latitude && longitude && chapterName && city && chapterLeaderName) {
-                        const point = turf.point([+longitude, +latitude]);
-                        let chapterStateName = null;
-
-                        for (let i = 0; i < allStatesGeoJSON.features.length; i++) {
-                            const stateFeature = allStatesGeoJSON.features[i];
-                            if (turf.booleanPointInPolygon(point, stateFeature)) {
-                                chapterStateName = stateFeature.properties.name.trim();
-                                break;
-                            }
-                        }
-
-                        if (chapterStateName) {
-                            stateCounts[chapterStateName] = (stateCounts[chapterStateName] || 0) + 1;
-                            row['DeterminedState'] = chapterStateName;
-                        }
-                    }
-                });
-
-                geojsonData.features = geojsonData.features.filter(feature => {
-                    const stateName = feature.properties.name.trim();
-                    return stateCounts[stateName] > 0;
-                });
-
-                allStatesGeoJSON = geojsonData;
-
-                initializeMap();
-                addClusteredMarkers();
-                addStatesToMap();
-            })
-            .catch(error => console.error('Error loading GeoJSON:', error));
-    }).catch(error => console.error('Error loading CSVs:', error));
-});
