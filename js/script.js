@@ -46,11 +46,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function initializeMap() {
         map = L.map('map', { zoomControl: false }).setView([39.8283, -98.5795], 5);
         L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-            attribution: 'Map data © OpenStreetMap contributors',
+            attribution: 'Map data &copy; OpenStreetMap contributors',
             subdomains: 'abcd',
             maxZoom: 19
         }).addTo(map);
         L.control.zoom({ position: 'bottomright' }).addTo(map);
+
         applyFontToMap();
     }
 
@@ -67,8 +68,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const childCount = cluster.getChildCount();
                 let clusterClass = 'marker-cluster-small';
 
-                if (childCount > 50) clusterClass = 'marker-cluster-large';
-                else if (childCount > 10) clusterClass = 'marker-cluster-medium';
+                if (childCount > 50) {
+                    clusterClass = 'marker-cluster-large';
+                } else if (childCount > 10) {
+                    clusterClass = 'marker-cluster-medium';
+                }
 
                 return new L.DivIcon({
                     html: `<div><span>${childCount}</span></div>`,
@@ -88,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (latitude && longitude && chapterName && city && chapterLeaderName) {
                 const marker = L.marker([+latitude, +longitude], { icon: customIcon });
                 marker.bindPopup(`
-                    <b><span style="color:#0F1B79;">${chapterName}</span></b><br>
+                    <b><span style="color: #0F1B79;">${chapterName}</span></b><br>
                     <i>${city}</i><br>
                     Chapter Leader: ${chapterLeaderName}
                 `);
@@ -118,14 +122,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 layer.on({
                     mouseover: e => {
-                        const hovered = e.target;
-                        hovered.setStyle({ weight: 5, color: '#0F1B79' });
-                        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) hovered.bringToFront();
+                        const layer = e.target;
+                        layer.setStyle({
+                            weight: 5,
+                            color: '#0F1B79',
+                        });
+                        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                            layer.bringToFront();
+                        }
                     },
                     mouseout: e => geojsonLayer.resetStyle(e.target),
                     click: () => {
                         map.removeLayer(markerClusterGroup);
                         map.removeLayer(geojsonLayer);
+
                         if (selectedStateLayer) map.removeLayer(selectedStateLayer);
                         if (markersLayer) map.removeLayer(markersLayer);
 
@@ -134,11 +144,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         stateChairElement.textContent =
                             chairInfo && chairInfo.Chair ? chairInfo.Chair : 'N/A';
 
-                        stateRegionalDirectorElement.textContent =
-                            chairInfo && chairInfo.RegionalDirector ? chairInfo.RegionalDirector : 'N/A';
+                        if (stateRegionalDirectorElement) {
+                            stateRegionalDirectorElement.textContent =
+                                chairInfo && chairInfo.RegionalDirector
+                                    ? chairInfo.RegionalDirector
+                                    : 'N/A';
+                        }
 
-                        stateSlackLinkElement.textContent =
-                            chairInfo && chairInfo.SlackLink ? chairInfo.SlackLink : 'N/A';
+                        if (stateSlackLinkElement) {
+                            stateSlackLinkElement.textContent =
+                                chairInfo && chairInfo.SlackLink
+                                    ? chairInfo.SlackLink
+                                    : 'N/A';
+                        }
 
                         infoBox.classList.remove('hidden');
                         defaultMessage.classList.add('hidden');
@@ -154,14 +172,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         markersLayer = L.layerGroup();
                         chaptersDataGlobal.forEach(row => {
-                            const chapterState = row['DeterminedState'];
                             const latitude = row['Latitude'];
                             const longitude = row['Longitude'];
+                            const chapterStateName = row['DeterminedState'];
 
-                            if (chapterState === stateName && latitude && longitude) {
+                            if (chapterStateName === stateName && latitude && longitude) {
                                 const marker = L.marker([+latitude, +longitude], { icon: customIcon });
                                 marker.bindPopup(`
-                                    <b><span style="color:#0F1B79;">${row['ChapterName']}</span></b><br>
+                                    <b><span style="color: #0F1B79;">${row['ChapterName']}</span></b><br>
                                     <i>${row['City']}</i><br>
                                     Chapter Leader: ${row['ChapterLeaderName']}
                                 `);
@@ -199,14 +217,14 @@ document.addEventListener('DOMContentLoaded', () => {
         d3.csv('chairs.csv'),
         d3.csv('chapters.csv')
     ]).then(([chairsData, chaptersData]) => {
-
         chairsData.forEach(row => {
             const stateName = (row.State || '').trim();
             if (!stateName) return;
 
-            const regionalDirector = (row['Regional Director'] || '').trim();
+            const regionalDirector =
+                (row['Regional Director'] || row['RegionalDirector'] || '').trim();
 
-            const slackLink = (row['Slack Link'] || '').trim();
+            const slackLink = (row['slack link'] || '').trim();
 
             chairData[stateName] = {
                 Chair: (row.Chair || '').trim(),
@@ -220,23 +238,23 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch('https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json')
             .then(response => response.json())
             .then(geojsonData => {
-
                 allStatesGeoJSON = geojsonData;
 
                 chaptersDataGlobal.forEach(row => {
                     const latitude = row['Latitude'];
                     const longitude = row['Longitude'];
-                    const chapterName = row['ChapterName'];
                     const city = row['City'];
+                    const chapterName = row['ChapterName'];
+                    const chapterLeaderName = row['ChapterLeaderName'];
 
-                    if (latitude && longitude && chapterName && city) {
+                    if (latitude && longitude && chapterName && city && chapterLeaderName) {
                         const point = turf.point([+longitude, +latitude]);
                         let chapterStateName = null;
 
                         for (let i = 0; i < allStatesGeoJSON.features.length; i++) {
-                            const feature = allStatesGeoJSON.features[i];
-                            if (turf.booleanPointInPolygon(point, feature)) {
-                                chapterStateName = feature.properties.name.trim();
+                            const stateFeature = allStatesGeoJSON.features[i];
+                            if (turf.booleanPointInPolygon(point, stateFeature)) {
+                                chapterStateName = stateFeature.properties.name.trim();
                                 break;
                             }
                         }
@@ -248,13 +266,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
 
-                allStatesGeoJSON.features = allStatesGeoJSON.features.filter(f =>
-                    stateCounts[f.properties.name.trim()] > 0
-                );
+                geojsonData.features = geojsonData.features.filter(feature => {
+                    const stateName = feature.properties.name.trim();
+                    return stateCounts[stateName] > 0;
+                });
+
+                allStatesGeoJSON = geojsonData;
 
                 initializeMap();
                 addClusteredMarkers();
                 addStatesToMap();
-            });
-    });
+            })
+            .catch(error => console.error('Error loading GeoJSON:', error));
+    }).catch(error => console.error('Error loading CSVs:', error));
 });
