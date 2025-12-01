@@ -224,14 +224,27 @@ document.addEventListener('DOMContentLoaded', () => {
         d3.csv('chapters.csv')
     ]).then(([chairsData, chaptersData]) => {
         chairsData.forEach(row => {
-            const stateName = row.State.trim();
-            if (stateName) {
-                chairData[stateName] = {
-                    Chair: row.Chair,
-                    RegionalDirector: row['Regional Director'] || '',
-                    SlackLink: row.SlackLink || ''
-                };
-            }
+            const stateName = (row.State || '').trim();
+            if (!stateName) return;
+
+            const regionalDirector =
+                (row['Regional Director'] || row['RegionalDirector'] || '').trim();
+
+            const slackLinkRaw =
+                (row.SlackLink ||
+                 row['Slack Link'] ||
+                 row['State Slack Link'] ||
+                 '').trim();
+
+            const slackLink = slackLinkRaw
+                ? (slackLinkRaw.startsWith('http') ? slackLinkRaw : 'https://' + slackLinkRaw)
+                : '';
+
+            chairData[stateName] = {
+                Chair: (row.Chair || '').trim(),
+                RegionalDirector: regionalDirector,
+                SlackLink: slackLink
+            };
         });
 
         chaptersDataGlobal = chaptersData;
