@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const layer = e.target;
                         layer.setStyle({
                             weight: 5,
-                            color: '#0F1B79',
+                            color: '#0F1B79'
                         });
                         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
                             layer.bringToFront();
@@ -140,23 +140,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (markersLayer) map.removeLayer(markersLayer);
 
                         stateNameElement.textContent = stateName;
-
-                        stateChairElement.textContent =
-                            chairInfo && chairInfo.Chair ? chairInfo.Chair : 'N/A';
-
-                        if (stateRegionalDirectorElement) {
-                            stateRegionalDirectorElement.textContent =
-                                chairInfo && chairInfo.RegionalDirector
-                                    ? chairInfo.RegionalDirector
-                                    : 'N/A';
-                        }
-
-                        if (stateSlackLinkElement) {
-                            stateSlackLinkElement.textContent =
-                                chairInfo && chairInfo.SlackLink
-                                    ? chairInfo.SlackLink
-                                    : 'N/A';
-                        }
+                        stateChairElement.textContent = chairInfo && chairInfo.Chair ? chairInfo.Chair : 'N/A';
+                        stateRegionalDirectorElement.textContent = chairInfo && chairInfo.RegionalDirector ? chairInfo.RegionalDirector : 'N/A';
+                        stateSlackLinkElement.textContent = chairInfo && chairInfo.SlackLink ? chairInfo.SlackLink : 'N/A';
 
                         infoBox.classList.remove('hidden');
                         defaultMessage.classList.add('hidden');
@@ -224,7 +210,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const regionalDirector =
                 (row['Regional Director'] || row['RegionalDirector'] || '').trim();
 
-            const slackLink = (row['slack link'] || '').trim();
+            const slackLink =
+                (row['Slack Link'] ||
+                 row['SlackLink'] ||
+                 row['slack link'] ||
+                 '').trim();
 
             chairData[stateName] = {
                 Chair: (row.Chair || '').trim(),
@@ -260,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
 
                         if (chapterStateName) {
-                            stateCounts[chapterStateName] = (stateCounts[chapterStateName] || 0) + 1;
+                            stateCounts[chapterStateName] = (stateCounts[stateName] || 0) + 1;
                             row['DeterminedState'] = chapterStateName;
                         }
                     }
@@ -276,7 +266,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 initializeMap();
                 addClusteredMarkers();
                 addStatesToMap();
-            })
-            .catch(error => console.error('Error loading GeoJSON:', error));
-    }).catch(error => console.error('Error loading CSVs:', error));
+            });
+    });
 });
