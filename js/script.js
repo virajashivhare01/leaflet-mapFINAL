@@ -1,4 +1,5 @@
-document.addEventListener('DOMContentLoaded', () => {
+  console.log("✅ HSDA map script loaded (debug build) v1");
+
   const infoBox = document.getElementById('info-box');
   const defaultMessage = document.getElementById('default-message');
   const stateNameElement = document.getElementById('state-name');
@@ -15,16 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let allStatesGeoJSON;
   let chaptersDataGlobal = [];
 
-  // Counts of LOCAL chapters per state (derived from points in chapters.csv)
   const stateCounts = {};
-
-  // Chair info per state (from chairs.csv)
   const chairData = {};
 
   function getColor(count) {
-    // Make zero-chapter states still visible + clickable
     if (count === 0) return '#f0f0f0';
-
     return count > 10 ? '#08306b'
       : count > 8 ? '#08519c'
         : count > 6 ? '#2171b5'
@@ -36,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function applyFontToMap() {
     const mapElements = document.querySelectorAll(
-      '.leaflet-container, .leaflet-popup-content, .marker-cluster div'
+      '.leaflet-container, .leaflet-popup-content, .marker-cluster div, .leaflet-tooltip'
     );
     mapElements.forEach(el => {
       el.style.fontFamily = "'Montserrat', sans-serif";
@@ -93,6 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
+    let markerCount = 0;
+
     chaptersDataGlobal.forEach(row => {
       const latitude = row['Latitude'];
       const longitude = row['Longitude'];
@@ -108,14 +106,24 @@ document.addEventListener('DOMContentLoaded', () => {
           Chapter Leader: ${chapterLeaderName}
         `);
         markerClusterGroup.addLayer(marker);
+        markerCount += 1;
       }
     });
+
+    console.log("📍 Total markers added:", markerCount);
 
     map.addLayer(markerClusterGroup);
     applyFontToMap();
   }
 
   function addStatesToMap() {
+    if (!allStatesGeoJSON || !allStatesGeoJSON.features) {
+      console.error("❌ allStatesGeoJSON missing or invalid");
+      return;
+    }
+
+    console.log("🗺️ Drawing states:", allStatesGeoJSON.features.length);
+
     geojsonLayer = L.geoJSON(allStatesGeoJSON, {
       style: feature => {
         const stateName = feature.properties.name.trim();
@@ -130,6 +138,10 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       onEachFeature: (feature, layer) => {
         const stateName = feature.properties.name.trim();
+        const count = stateCounts[stateName] || 0;
+
+        // ✅ DEBUG: show tooltip always so you can SEE states exist
+        layer.bindTooltip(`${stateName} (${count})`, { sticky: true });
 
         layer.on({
           mouseover: e => {
@@ -141,35 +153,28 @@ document.addEventListener('DOMContentLoaded', () => {
           },
           mouseout: e => geojsonLayer.resetStyle(e.target),
           click: () => {
-            // Hide the overview (states + clusters) when a state is selected
-            if (map.hasLayer(markerClusterGroup)) map.removeLayer(markerClusterGroup);
-            if (map.hasLayer(geojsonLayer)) map.removeLayer(geojsonLayer);
+            if (markerClusterGroup && map.hasLayer(markerClusterGroup)) map.removeLayer(markerClusterGroup);
+            if (geojsonLayer && map.hasLayer(geojsonLayer)) map.removeLayer(geojsonLayer);
 
             if (selectedStateLayer) map.removeLayer(selectedStateLayer);
             if (markersLayer) map.removeLayer(markersLayer);
 
-            // Chair info might exist even if local chapters don't
             const chairInfo = chairData[stateName];
 
             stateNameElement.textContent = stateName;
-
-            stateChairElement.textContent =
-              chairInfo && chairInfo.Chair ? chairInfo.Chair : 'N/A';
+            stateChairElement.textContent = chairInfo?.Chair || 'N/A';
 
             if (stateRegionalDirectorElement) {
-              stateRegionalDirectorElement.textContent =
-                chairInfo && chairInfo.RegionalDirector ? chairInfo.RegionalDirector : 'N/A';
+              stateRegionalDirectorElement.textContent = chairInfo?.RegionalDirector || 'N/A';
             }
 
             if (stateSlackLinkElement) {
-              stateSlackLinkElement.textContent =
-                chairInfo && chairInfo.SlackLink ? chairInfo.SlackLink : 'N/A';
+              stateSlackLinkElement.textContent = chairInfo?.SlackLink || 'N/A';
             }
 
             infoBox.classList.remove('hidden');
             defaultMessage.classList.add('hidden');
 
-            // Highlight the selected state
             selectedStateLayer = L.geoJSON(feature, {
               style: {
                 fillColor: getColor(stateCounts[stateName] || 0),
@@ -179,10 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
               }
             }).addTo(map);
 
-            // Add markers for chapters in this state (if any)
             markersLayer = L.layerGroup();
-
-            let foundAnyMarkers = false;
 
             chaptersDataGlobal.forEach(row => {
               const latitude = row['Latitude'];
@@ -190,8 +192,6 @@ document.addEventListener('DOMContentLoaded', () => {
               const chapterStateName = row['DeterminedState'];
 
               if (chapterStateName === stateName && latitude && longitude) {
-                foundAnyMarkers = true;
-
                 const marker = L.marker([+latitude, +longitude], { icon: customIcon });
                 marker.bindPopup(`
                   <b><span style="color: #0F1B79;">${row['ChapterName']}</span></b><br>
@@ -203,12 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             map.addLayer(markersLayer);
-
-            // Fit to the state bounds; if no markers, still fit to the state polygon
             map.fitBounds(layer.getBounds());
-
-            // If you want: could optionally show a message if foundAnyMarkers === false
-            // (left out to avoid requiring HTML changes)
 
             showExitButton();
             applyFontToMap();
@@ -241,45 +236,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
   exitButton.addEventListener('click', resetMap);
 
-  Promise.all([
-    d3.csv('chairs.csv'),
-    d3.csv('chapters.csv')
-  ])
+  Promise.all([d3.csv('chairs.csv'), d3.csv('chapters.csv')])
     .then(([chairsData, chaptersData]) => {
-      // Load chair data
       chairsData.forEach(row => {
         const stateName = (row.State || '').trim();
         if (!stateName) return;
 
-        const regionalDirector =
-          (row['Regional Director'] || row['RegionalDirector'] || '').trim();
-
+        const regionalDirector = (row['Regional Director'] || row['RegionalDirector'] || '').trim();
         const slackLink = (row.Slacks || '').trim();
 
         chairData[stateName] = {
           Chair: (row.Chair || '').trim(),
-          RegionalDirector: regionalDirector,
+          RegionalDirector,
           SlackLink: slackLink
         };
       });
 
-      // Load chapter points
+      console.log("👤 Chair states loaded:", Object.keys(chairData).length);
+
       chaptersDataGlobal = chaptersData;
 
-      return fetch(
-        'https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json'
-      )
-        .then(response => response.json())
+      return fetch('https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json')
+        .then(r => r.json())
         .then(geojsonData => {
           allStatesGeoJSON = geojsonData;
 
-          // Initialize all states to 0 so they still appear even without chapters
+          console.log("📦 GeoJSON features total:", allStatesGeoJSON.features.length);
+          console.log("🧾 GeoJSON first few:", allStatesGeoJSON.features.slice(0, 5).map(f => f.properties.name));
+
+          // Initialize all states to 0
           allStatesGeoJSON.features.forEach(feature => {
             const stateName = feature.properties.name.trim();
             stateCounts[stateName] = 0;
           });
 
-          // Determine which state each chapter point is in (and count them)
+          // Determine state for each chapter + count
           chaptersDataGlobal.forEach(row => {
             const latitude = row['Latitude'];
             const longitude = row['Longitude'];
@@ -306,9 +297,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           });
 
-          // ✅ IMPORTANT FIX:
-          // Do NOT filter out states with 0 chapters. We want them visible/clickable
-          // so chair info can be shown even when there are no local chapters.
+          // Debug: how many states have 0 vs >0
+          const zeroStates = Object.entries(stateCounts).filter(([, c]) => c === 0).map(([s]) => s);
+          const nonZeroStates = Object.entries(stateCounts).filter(([, c]) => c > 0).map(([s]) => s);
+
+          console.log("✅ States with chapters:", nonZeroStates.length, nonZeroStates);
+          console.log("✅ States with ZERO chapters:", zeroStates.length, zeroStates);
 
           initializeMap();
           addClusteredMarkers();
@@ -317,4 +311,3 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .catch(error => console.error('Error loading data:', error));
 });
-
