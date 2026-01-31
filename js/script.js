@@ -1,5 +1,4 @@
-  console.log("✅ HSDA map script loaded (debug build) v1");
-
+document.addEventListener('DOMContentLoaded', () => {
   const infoBox = document.getElementById('info-box');
   const defaultMessage = document.getElementById('default-message');
   const stateNameElement = document.getElementById('state-name');
@@ -13,14 +12,20 @@
   let selectedStateLayer;
   let markersLayer;
   let markerClusterGroup;
+
   let allStatesGeoJSON;
+  let displayStatesGeoJSON;
+
   let chaptersDataGlobal = [];
 
+  // LOCAL chapters per state (from chapters.csv point-in-polygon)
   const stateCounts = {};
+
+  // State chapter data (from chairs.csv)
   const chairData = {};
 
   function getColor(count) {
-    if (count === 0) return '#f0f0f0';
+    // Base choropleth for locals
     return count > 10 ? '#08306b'
       : count > 8 ? '#08519c'
         : count > 6 ? '#2171b5'
@@ -52,14 +57,11 @@
   function initializeMap() {
     map = L.map('map', { zoomControl: false }).setView([39.8283, -98.5795], 5);
 
-    L.tileLayer(
-      'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-      {
-        attribution: 'Map data &copy; OpenStreetMap contributors',
-        subdomains: 'abcd',
-        maxZoom: 19
-      }
-    ).addTo(map);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      attribution: 'Map data &copy; OpenStreetMap contributors',
+      subdomains: 'abcd',
+      maxZoom: 19
+    }).addTo(map);
 
     L.control.zoom({ position: 'bottomright' }).addTo(map);
     applyFontToMap();
@@ -89,8 +91,6 @@
       }
     });
 
-    let markerCount = 0;
-
     chaptersDataGlobal.forEach(row => {
       const latitude = row['Latitude'];
       const longitude = row['Longitude'];
@@ -106,42 +106,34 @@
           Chapter Leader: ${chapterLeaderName}
         `);
         markerClusterGroup.addLayer(marker);
-        markerCount += 1;
       }
     });
-
-    console.log("📍 Total markers added:", markerCount);
 
     map.addLayer(markerClusterGroup);
     applyFontToMap();
   }
 
   function addStatesToMap() {
-    if (!allStatesGeoJSON || !allStatesGeoJSON.features) {
-      console.error("❌ allStatesGeoJSON missing or invalid");
-      return;
-    }
-
-    console.log("🗺️ Drawing states:", allStatesGeoJSON.features.length);
-
-    geojsonLayer = L.geoJSON(allStatesGeoJSON, {
+    // Always draw from displayStatesGeoJSON (chair states OR local states)
+    geojsonLayer = L.geoJSON(displayStatesGeoJSON, {
       style: feature => {
         const stateName = feature.properties.name.trim();
-        const count = stateCounts[stateName] || 0;
+        const localCount = stateCounts[stateName] || 0;
+        const hasChair = !!chairData[stateName];
+
+        // ✅ Chair-only states are emphasized so they are obvious/clickable
+        const isChairOnly = hasChair && localCount === 0;
 
         return {
-          color: '#fff',
-          weight: 1,
-          fillColor: getColor(count),
-          fillOpacity: 0.7
+          color: hasChair ? '#0F1B79' : '#ffffff',
+          weight: hasChair ? 2.5 : 1,
+          fillColor: isChairOnly ? '#d9d9d9' : getColor(localCount),
+          fillOpacity: 0.75
         };
       },
+
       onEachFeature: (feature, layer) => {
         const stateName = feature.properties.name.trim();
-        const count = stateCounts[stateName] || 0;
-
-        // ✅ DEBUG: show tooltip always so you can SEE states exist
-        layer.bindTooltip(`${stateName} (${count})`, { sticky: true });
 
         layer.on({
           mouseover: e => {
@@ -151,14 +143,19 @@
               layerTarget.bringToFront();
             }
           },
+
           mouseout: e => geojsonLayer.resetStyle(e.target),
+
           click: () => {
+            // Remove overview layers
             if (markerClusterGroup && map.hasLayer(markerClusterGroup)) map.removeLayer(markerClusterGroup);
             if (geojsonLayer && map.hasLayer(geojsonLayer)) map.removeLayer(geojsonLayer);
 
+            // Clear previous
             if (selectedStateLayer) map.removeLayer(selectedStateLayer);
             if (markersLayer) map.removeLayer(markersLayer);
 
+            // Fill info box from chairs.csv
             const chairInfo = chairData[stateName];
 
             stateNameElement.textContent = stateName;
@@ -167,7 +164,6 @@
             if (stateRegionalDirectorElement) {
               stateRegionalDirectorElement.textContent = chairInfo?.RegionalDirector || 'N/A';
             }
-
             if (stateSlackLinkElement) {
               stateSlackLinkElement.textContent = chairInfo?.SlackLink || 'N/A';
             }
@@ -175,17 +171,22 @@
             infoBox.classList.remove('hidden');
             defaultMessage.classList.add('hidden');
 
+            // Highlight selected state
+            const localCount = stateCounts[stateName] || 0;
+            const hasChair = !!chairData[stateName];
+            const isChairOnly = hasChair && localCount === 0;
+
             selectedStateLayer = L.geoJSON(feature, {
               style: {
-                fillColor: getColor(stateCounts[stateName] || 0),
-                fillOpacity: 0.7,
+                color: '#0F1B79',
                 weight: 5,
-                color: '#0F1B79'
+                fillColor: isChairOnly ? '#d9d9d9' : getColor(localCount),
+                fillOpacity: 0.75
               }
             }).addTo(map);
 
+            // Add local markers (if any)
             markersLayer = L.layerGroup();
-
             chaptersDataGlobal.forEach(row => {
               const latitude = row['Latitude'];
               const longitude = row['Longitude'];
@@ -203,6 +204,8 @@
             });
 
             map.addLayer(markersLayer);
+
+            // Fit to state bounds regardless of marker count
             map.fitBounds(layer.getBounds());
 
             showExitButton();
@@ -238,6 +241,7 @@
 
   Promise.all([d3.csv('chairs.csv'), d3.csv('chapters.csv')])
     .then(([chairsData, chaptersData]) => {
+      // Chairs: build chairData map
       chairsData.forEach(row => {
         const stateName = (row.State || '').trim();
         if (!stateName) return;
@@ -247,12 +251,10 @@
 
         chairData[stateName] = {
           Chair: (row.Chair || '').trim(),
-          RegionalDirector,
+          RegionalDirector: regionalDirector,
           SlackLink: slackLink
         };
       });
-
-      console.log("👤 Chair states loaded:", Object.keys(chairData).length);
 
       chaptersDataGlobal = chaptersData;
 
@@ -261,16 +263,13 @@
         .then(geojsonData => {
           allStatesGeoJSON = geojsonData;
 
-          console.log("📦 GeoJSON features total:", allStatesGeoJSON.features.length);
-          console.log("🧾 GeoJSON first few:", allStatesGeoJSON.features.slice(0, 5).map(f => f.properties.name));
-
-          // Initialize all states to 0
-          allStatesGeoJSON.features.forEach(feature => {
-            const stateName = feature.properties.name.trim();
-            stateCounts[stateName] = 0;
+          // Init all state counts to 0
+          allStatesGeoJSON.features.forEach(f => {
+            const name = f.properties.name.trim();
+            stateCounts[name] = 0;
           });
 
-          // Determine state for each chapter + count
+          // Assign each chapter to a state + count locals
           chaptersDataGlobal.forEach(row => {
             const latitude = row['Latitude'];
             const longitude = row['Longitude'];
@@ -297,17 +296,22 @@
             }
           });
 
-          // Debug: how many states have 0 vs >0
-          const zeroStates = Object.entries(stateCounts).filter(([, c]) => c === 0).map(([s]) => s);
-          const nonZeroStates = Object.entries(stateCounts).filter(([, c]) => c > 0).map(([s]) => s);
-
-          console.log("✅ States with chapters:", nonZeroStates.length, nonZeroStates);
-          console.log("✅ States with ZERO chapters:", zeroStates.length, zeroStates);
+          // ✅ MAIN LOGIC:
+          // Show state if it has locals OR it has a chair entry
+          displayStatesGeoJSON = {
+            type: "FeatureCollection",
+            features: allStatesGeoJSON.features.filter(f => {
+              const name = f.properties.name.trim();
+              const hasLocals = (stateCounts[name] || 0) > 0;
+              const hasChair = !!chairData[name];
+              return hasLocals || hasChair;
+            })
+          };
 
           initializeMap();
           addClusteredMarkers();
           addStatesToMap();
         });
     })
-    .catch(error => console.error('Error loading data:', error));
+    .catch(err => console.error('Error loading data:', err));
 });
