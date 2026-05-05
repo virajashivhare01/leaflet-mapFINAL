@@ -1,7 +1,7 @@
 WKT,First name,Last name,City,State/Province,State/Province Abbreviated,Zip code,Country,ChapterLeaderName,ChapterName,State,Latitude,Longitude
 POINT(-111.876183 40.758701),Najma,Ahmed (Email: najmaamer365@gmail.com),Salt Lake City,Utah,UT,84103,USA,Najma Ahmed (Email: najmaamer365@gmail.com),West High Democrats,Utah,40.758701,-111.876183
 POINT(-111.880768 40.889389),John,Alley ,Bountiful,Utah,UT,84010,USA,John Alley,Bountiful High Democrats,Utah,40.889389,-111.880768
-POINT(-74.2884 40.6595),Caleb,Drexler (Email: calebtdrexler@gmail.com),Union County,Pennsylvania,PA,84009,USA,Caleb Drexler (Email: calebtdrexler@gmail.com),Union County High School Democrats,Pennsylvania,40.6595,-74.2884
+POINT(-74.308590 40.659800),"Sohan, Sofia","Saggar (Email: sohansaggar@gmail.com), Gallo-Mora (Email: sofiacgallo@gmail.com)",Union County,New Jersey,NJ,07083,US,Sohan Saggar & Sofia Gallo-Mora,Union County High School Democrats,New Jersey,40.6598,-74.30859
 POINT(-75.2507 39.9982),Jonah,Vog (Email: s018862@students.lmsd.org),Montgomery County,Pennsylvania,PA,84036,USA,Jonah Vog (Email: s018862@students.lmsd.org),Lower Merion High School Democrats,Pennsylvania,39.9982,-75.2507
 POINT(-75.389477 40.536525),Jonathan,Saunders (Email: jonathanesaunders@icloud.com),Lehigh,Pennsylvania,PA,19096,USA,Jonathan Saunders (Email: jonathanesaunders@icloud.com),Southern Lehigh High School Democrats,Pennsylvania,40.536525,-75.389477
 POINT(-75.3017 39.9837),"Mirabel, Catherine","Horton (Email: mirablehorton@gmail.com), Kinkopf (Email: catiekinkopf@gmail.com)",Haverford,Pennsylvania,PA,18034,USA,"Catherine Mirabel Horton (Email: mirablehorton@gmail.com), Catherine Kinkopf (Email: catiekinkopf@gmail.com)",Haverford High School Democrats,Pennsylvania,39.9837,-75.3017
@@ -243,9 +243,8 @@ POINT(-76.7116 39.3118),Kevon,Burnett (Email: kevonburnett04@gmail.com),Woodlawn
 POINT(-97.0150 33.2362),Maxwell,de la Houssaye (Email: maxdelawho@gmail.com),Prosper,Texas,TX,75078,US,Maxwell de la Houssaye,Richland High School Democrats,Texas,33.2362,-97.015
 POINT(-78.4767 38.0293),Jack,Bentley (Email: jackgabrielbentley@gmail.com),Charlottesville,Virginia,VA,22903,US,Jack Bentley,Springbrook Young Democrats,Texas,38.0293,-78.4767
 POINT(-94.1574 36.0626),Jair,Arroyo (Email: jair@ydarkansas.org),Fayetteville,Arkansas,AR,72701,US,Jair Arroyo,Arkansas High School Democrats,Virginia,36.0626,-94.1574
-POINT(-78.4767 38.0293),"Sasha, Eliana","Thompson (Email: thompsonsa27@bearsmail.org), Gerbi (Email: gerbiel@bearsmail.org)",Charlottesville,Virginia,VA,22903,US,Sasha Thompson and Eliana Gerbi,Holy Innocents' Episcopal School,Arkansas,38.0293,-78.4767
-POINT(-74.308590 40.659800),"Sohan, Sofia","Saggar (Email: sohansaggar@gmail.com), Gallo-Mora (Email: sofiacgallo@gmail.com)",Union County,New Jersey,NJ,07083,US,Sohan Saggar & Sofia Gallo-Mora,Union County High School Democrats,New Jersey,40.6598,-74.30859
 POINT(-77.3064 38.8462),Emerson,Krauss (Email: Etkrauss15@gmail.com),Fairfax,Virginia,VA,22030,US,Emerson Krauss,Northeast Ohio,Virginia,38.8462,-77.3064
+,,,,,,,,,,,,
 POINT(-77.3064 38.8462),Katrin,Manukyan (Email: Katsoosh@gmail.com),Fairfax,Virginia,VA,22030,US,Katrin Manukyan,Northridge Rising,Virginia,38.8462,-77.3064
 POINT(-118.4695 33.9850),Ariel,Bell (Email: anbell2027@gmail.com),Venice,California,CA,90291,US,Ariel Bell,Highschool Democrats of Hinds County,Virginia,33.985,-118.4695
 POINT(-118.2551 34.1425),Mattie,Peavy (Email: mattiepeavy8@gmail.com),Glendale,California,CA,91205,US,Mattie Peavy,Lincoln East Young Democrats,California,34.1425,-118.2551
